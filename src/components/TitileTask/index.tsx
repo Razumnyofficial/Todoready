@@ -1,8 +1,12 @@
-import React from "react";
-
 import "./titletask.css";
+import { Todo } from "../../App";
 
-const InfoTasks = ({ info, setFilterParams }) => {
+interface InfoTasksProps {
+  info: Todo[];
+  setFilterParams: (argument: boolean | null) => void;
+}
+
+const InfoTasks: React.FC<InfoTasksProps> = ({ info, setFilterParams }) => {
   let countTrue = 0;
   let countFalse = 0;
   for (let i = 0; i < info.length; i++) {
@@ -12,7 +16,7 @@ const InfoTasks = ({ info, setFilterParams }) => {
       countFalse++;
     }
   }
-
+  // console.log({info.isDone});
   return (
     <div className="title_tasks">
       <button onClick={() => setFilterParams(null)} className="tasks_btn">

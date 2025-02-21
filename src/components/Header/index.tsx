@@ -1,6 +1,16 @@
 import "./header.css";
 
-const Header = ({ inputName, setInputName, addTask }) => {
+interface HeaderProps {
+  inputName: string;
+  setInputName: (value: string) => void;
+  addTask: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({
+  inputName,
+  setInputName,
+  addTask,
+}) => {
   return (
     <div className="header">
       <input

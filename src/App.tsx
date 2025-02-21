@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react";
-import Header from "./components/Header";
+import { useEffect, useState } from "react";
 import Tasks from "./components/Tasks";
 import TitleTasks from "./components/TitileTask";
 
 import "./app.css";
+import Header from "./components/Header";
 
 function App() {
-  const [inputName, setInputName] = useState("");
-  // const [info, setInfo] = useState(INFOTASKS);
-  const [filterParams, setFilterParams] = useState(null);
-  const [error, setError] = useState(); 
-  const [TasksData, setTasksData] = useState([]); 
+  const [inputName, setInputName] = useState<string>("");
+  const [filterParams, setFilterParams] = useState<boolean | null>(null);
+  const [TasksData, setTasksData] = useState<Todo[]>([]); // получение и состояние данных
 
   //Get запрос
   const fetchData = async () => {
@@ -22,12 +20,11 @@ function App() {
         throw new Error("Failed to fetch data");
       }
       setTasksData(data);
-    } catch (error) {
-      setError({
-        message: error.message || "Could not fetch data, please try again", //тут не выводится(разобраться)
-      });
+    } catch (err) {
+      console.error(err);
     }
   };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -35,9 +32,7 @@ function App() {
   // POST
 
   const addTask = async () => {
-    // if (!inputName.trim()) return;
-    if (!inputName.trim() || inputName.length < 2 || inputName.length > 62)
-      return alert("Ошибка: Имя должно содержать от 2 до 62 символов.");
+    if (!inputName.trim()) return;
 
     const newTask = {
       title: inputName,
@@ -64,7 +59,7 @@ function App() {
     }
   };
 
-  const removeTask = async (id) => {
+  const removeTask = async (id: number) => {
     try {
       const response = await fetch(`https://easydev.club/api/v1/todos/${id}`, {
         method: "DELETE",
@@ -78,7 +73,11 @@ function App() {
     }
   };
 
-  const updateTask = async (id, updatedTitle, updatedDone) => {
+  const updateTask = async (
+    id: number,
+    updatedTitle: string,
+    updatedDone?: boolean
+  ) => {
     const updatedTask = { title: updatedTitle, isDone: updatedDone };
 
     try {
@@ -98,9 +97,6 @@ function App() {
       console.error("ошибка при обновлении задачи", error);
     }
   };
-  if (error) {
-    return <h1>Ошибка обработки данных |{error.message}</h1>;
-  }
 
   return (
     <div className="App">
@@ -123,3 +119,10 @@ function App() {
 }
 
 export default App;
+
+export interface Todo {
+  id: number;
+  title: string;
+  created: string; // ISO date string
+  isDone: boolean;
+}

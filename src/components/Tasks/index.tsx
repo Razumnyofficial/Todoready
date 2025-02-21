@@ -1,16 +1,28 @@
 import { useState } from "react";
 import "./tasks.css";
+import { Todo } from "../../App";
 
-const Tasks = ({ info, removeItem, filterParams, updateTask }) => {
-  const [editingTaskId, setEditingTaskId] = useState(null); // Состояние для редактируемой задачи
-  const [editedTaskName, setEditedTaskName] = useState(""); // Состояние для нового названия задачи
+const Tasks = ({
+  info,
+  removeItem,
+  filterParams,
+  updateTask,
+}: {
+  info: Todo[];
+  removeItem: (id: number) => void;
+  filterParams: boolean | null;
+  updateTask: (id: number, title: string, isDone?: boolean) => void;
+}) => {
+  const [editingTaskId, setEditingTaskId] = useState(0); 
+  const [editedTaskName, setEditedTaskName] = useState(""); 
 
   const filteredInfo =
     filterParams === null
+
       ? info.sort((item1, item2) => item2.id - item1.id)
       : info.filter((item) => item.isDone === filterParams);
 
-  const handleEditClick = (item) => {
+  const handleEditClick = (item: Todo) => {
     setEditingTaskId(item.id);
     setEditedTaskName(item.title);
   };
@@ -20,11 +32,13 @@ const Tasks = ({ info, removeItem, filterParams, updateTask }) => {
     setEditingTaskId(0);
   };
 
+
   return (
     <div className="datainfo">
       {filteredInfo.map((item) => (
         <div key={item.id} className="item-container">
           <div className="title">
+            <span className="custom_checkbox"></span>
             <input
               className="input_check"
               checked={item.isDone}
@@ -75,7 +89,7 @@ const Tasks = ({ info, removeItem, filterParams, updateTask }) => {
                   </button>
                   <button
                     className="iconsbtnsave"
-                    onClick={() => setEditingTaskId(null)}
+                    onClick={() => setEditingTaskId(0)}
                   >
                     <img
                       className="btn_icons_1"
