@@ -32,7 +32,10 @@ function App() {
   // POST
 
   const addTask = async () => {
-    if (!inputName.trim()) return;
+    if (!inputName.trim()) {
+      alert("название задачи не может быть пустым");
+      return;
+    }
     if (inputName.length < 2 || inputName.length > 64) {
       alert("название задачи должно быть от 2 до 64 символов");
       return;
