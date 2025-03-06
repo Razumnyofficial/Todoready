@@ -1,32 +1,42 @@
 import "./titletask.css";
-import { Todo } from "../../App";
+import { TodoInfo } from "../types/todos";
+import { useEffect, useState } from "react";
+import { getfetchInfo } from "../api/todos";
 
 interface InfoTasksProps {
-  info: Todo[];
-  setFilterParams: (argument: boolean | null) => void;
+  setFilterParams: (value: boolean | null) => void;
 }
-
-const InfoTasks: React.FC<InfoTasksProps> = ({ info, setFilterParams }) => {
-  let countTrue = 0;
-  let countFalse = 0;
-  for (let i = 0; i < info.length; i++) {
-    if (info[i].isDone === true) {
-      countTrue++;
-    } else {
-      countFalse++;
+const InfoTasks: React.FC<InfoTasksProps> = ({ setFilterParams }) => {
+  const fetchInfo = async () => {
+    try {
+      const info = await getfetchInfo();
+      setInfoTitle(info);
+    } catch (error) {
+      console.error(error);
     }
-  }
-  // console.log({info.isDone});
+  };
+
+  const [infoTitle, setInfoTitle] = useState<TodoInfo>({
+    all: 0,
+    completed: 0,
+    inWork: 0,
+  });
+  useEffect(() => {
+    fetchInfo();
+  }, []);
+
+  console.log(infoTitle.inWork);
+
   return (
     <div className="title_tasks">
-      <button onClick={() => setFilterParams(null)} className="tasks_btn">
-        все ({info.length}){" "}
+      <button className="tasks_btn" onClick={() => setFilterParams(null)}>
+        все ({infoTitle.all})
       </button>
-      <button onClick={() => setFilterParams(false)} className="tasks_btn">
-        в работе ({countFalse})
+      <button className="tasks_btn" onClick={() => setFilterParams(false)}>
+        в работе ({infoTitle.inWork})
       </button>
-      <button onClick={() => setFilterParams(true)} className="tasks_btn">
-        завершено ({countTrue})
+      <button className="tasks_btn" onClick={() => setFilterParams(true)}>
+        завершено ({infoTitle.completed})
       </button>
     </div>
   );
