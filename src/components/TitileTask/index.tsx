@@ -1,7 +1,7 @@
-import "./titletask.css";
 import { TodoInfo } from "../types/todos";
 import { useEffect, useState } from "react";
 import { getfetchInfo } from "../api/todos";
+import "./titletask.css";
 
 interface InfoTasksProps {
   setFilterParams: (value: boolean | null) => void;
