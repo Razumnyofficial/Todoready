@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Tasks from "./components/Tasks";
 import TitleTasks from "./components/TitileTask";
 
-import "./app.css";
 import Header from "./components/Header";
 import {
   getfetchData,
