@@ -29,9 +29,6 @@ const Header: React.FC<HeaderProps> = ({ fetchData }) => {
         isDone: false,
       });
 
-      if (!response.ok) {
-        throw new Error("Failed add Task");
-      }
       console.log("Задача появиласбь:", response);
 
       await fetchData();

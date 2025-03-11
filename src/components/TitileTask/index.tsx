@@ -27,8 +27,6 @@ const InfoTasks: React.FC<InfoTasksProps> = ({ setFilterParams }) => {
     fetchInfo();
   }, [infoTitle]);
 
-  console.log(infoTitle.inWork);
-
   return (
     <div className="title_tasks">
       {/* <button className="tasks_btn" onClick={() => setFilterParams(null)}>

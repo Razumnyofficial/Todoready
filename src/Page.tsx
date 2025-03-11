@@ -77,9 +77,6 @@ function Page() {
     try {
       const response = await updateTask(id, updatedTask);
 
-      if (!response?.ok) {
-        throw new Error("Failed to update task");
-      }
       await fetchData();
       console.log(response);
     } catch (error) {
