@@ -57,7 +57,7 @@ input {
 }
 
 .info_items {
-  width: 230px;
+  max-width: 230px;
 }
 .item-container {
   margin-top: 10px;

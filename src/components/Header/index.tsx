@@ -2,6 +2,8 @@ import "./header.css";
 import { useState } from "react";
 import { newTask } from "../api/todos";
 
+import { Input, Button } from "antd";
+
 interface HeaderProps {
   // newTodo: string;
   // setnewTodo: (value: string) => void;
@@ -36,11 +38,21 @@ const Header: React.FC<HeaderProps> = ({ fetchData }) => {
       setnewTodo("");
     } catch (error) {
       console.error(error);
+      throw error;
     }
   };
   return (
     <div className="header">
-      <input
+      <Input
+        style={{ width: "400px", marginRight: "40px" }}
+        placeholder="Basic usage"
+        value={newTodo}
+        onChange={(e) => setnewTodo(e.target.value)}
+      />
+      <Button type="primary" onClick={() => addTask()}>
+        Добавить
+      </Button>
+      {/* <input
         className="input"
         placeholder="Task To Be Done..."
         type="text"
@@ -49,7 +61,7 @@ const Header: React.FC<HeaderProps> = ({ fetchData }) => {
       />
       <button className="btn_color" onClick={() => addTask()}>
         Add
-      </button>
+      </button> */}
     </div>
   );
 };

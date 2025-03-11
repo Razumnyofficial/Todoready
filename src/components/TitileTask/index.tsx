@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { getfetchInfo } from "../api/todos";
 import "./titletask.css";
 
+import { Button } from "antd";
+
 interface InfoTasksProps {
   setFilterParams: (value: boolean | null) => void;
 }
@@ -23,13 +25,13 @@ const InfoTasks: React.FC<InfoTasksProps> = ({ setFilterParams }) => {
   });
   useEffect(() => {
     fetchInfo();
-  }, []);
+  }, [infoTitle]);
 
   console.log(infoTitle.inWork);
 
   return (
     <div className="title_tasks">
-      <button className="tasks_btn" onClick={() => setFilterParams(null)}>
+      {/* <button className="tasks_btn" onClick={() => setFilterParams(null)}>
         все ({infoTitle.all})
       </button>
       <button className="tasks_btn" onClick={() => setFilterParams(false)}>
@@ -37,7 +39,17 @@ const InfoTasks: React.FC<InfoTasksProps> = ({ setFilterParams }) => {
       </button>
       <button className="tasks_btn" onClick={() => setFilterParams(true)}>
         завершено ({infoTitle.completed})
-      </button>
+      </button> */}
+
+      <Button type="text" onClick={() => setFilterParams(null)}>
+        Все ({infoTitle.all})
+      </Button>
+      <Button type="text" onClick={() => setFilterParams(false)}>
+        В работе ({infoTitle.inWork})
+      </Button>
+      <Button type="text" onClick={() => setFilterParams(true)}>
+        Завершено ({infoTitle.completed})
+      </Button>
     </div>
   );
 };
