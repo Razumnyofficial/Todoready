@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-import Tasks from "./components/Tasks";
-import TitleTasks from "./components/TitileTask";
+import Tasks from "../components/Tasks";
+import TitleTasks from "../components/TitileTask";
 
-import Header from "./components/Header";
+import Header from "../components/Header";
 import {
   getfetchData,
   // newTask,
   deleteTask,
   updateTask,
-} from "./components/api/todos";
-import { Todo } from "./components/types/todos";
+} from "../components/api/todos";
+import { Todo } from "../components/types/todos";
 
 function Page() {
   // const [newTodo, setnewTodo] = useState<string>("");

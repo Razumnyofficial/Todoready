@@ -56,7 +56,7 @@ const Task = ({
               onChange={(e) => setEditedTaskName(e.target.value)}
             /> */}
             <Input
-              style={{ width: "240px", marginRight: "20px" }}
+              style={{ width: "400px", marginRight: "20px" }}
               type="text"
               value={editedTaskName}
               onChange={(e) => setEditedTaskName(e.target.value)}
