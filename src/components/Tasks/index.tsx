@@ -1,51 +1,32 @@
-import { useState } from "react";
 import "./tasks.css";
 import { Todo } from "../types/todos";
 import Task from "../Task";
 
 const Tasks = ({
+  fetchData,
   info,
-  removeItem,
   filterParams,
-  fetchupdateTask,
+  // fetchupdateTask,
 }: {
+  fetchData: () => Promise<void>;
   info: Todo[];
-  removeItem: (id: number) => void;
   filterParams: boolean | null;
-  fetchupdateTask: (id: number, title: string, isDone?: boolean) => void;
+  // fetchupdateTask: (id: number, title: string, isDone?: boolean) => void;
 }) => {
-  const [editingTaskId, setEditingTaskId] = useState(0);
-  const [editedTaskName, setEditedTaskName] = useState("");
-
   const progressTasks =
     filterParams === null
       ? info.sort((item1, item2) => item2.id - item1.id)
       : info.filter((item) => item.isDone === filterParams);
-
-  const handleEditClick = (item: Todo) => {
-    setEditingTaskId(item.id);
-    setEditedTaskName(item.title);
-  };
-
-  const handleSaveEdit = () => {
-    fetchupdateTask(editingTaskId, editedTaskName);
-    setEditingTaskId(0);
-  };
-
+  console.log(progressTasks, "1");
+  console.log(filterParams);
   return (
     <div className="datainfo">
-      {progressTasks.map((item) => (
+      {info.map((item) => (
         <Task
           item={item}
           key={item.id}
-          removeItem={removeItem}
-          handleEditClick={handleEditClick}
-          handleSaveEdit={handleSaveEdit}
-          editingTaskId={editingTaskId}
-          editedTaskName={editedTaskName}
-          setEditedTaskName={setEditedTaskName}
-          setEditingTaskId={setEditingTaskId}
-          fetchupdateTask={fetchupdateTask}
+          // fetchupdateTask={fetchupdateTask}
+          fetchData={fetchData}
         />
       ))}
     </div>

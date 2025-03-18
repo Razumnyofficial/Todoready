@@ -1,7 +1,7 @@
 import { TodoInfo } from "../types/todos";
 import { useEffect, useState } from "react";
 import { getfetchInfo } from "../api/todos";
-import "./titletask.css";
+import "./infotasks.css";
 
 import { Button } from "antd";
 
@@ -9,6 +9,14 @@ interface InfoTasksProps {
   setFilterParams: (value: boolean | null) => void;
 }
 const InfoTasks: React.FC<InfoTasksProps> = ({ setFilterParams }) => {
+  const [infoTitle, setInfoTitle] = useState<TodoInfo>({
+    all: 0,
+    completed: 0,
+    inWork: 0,
+  });
+
+ 
+
   const fetchInfo = async () => {
     try {
       const info = await getfetchInfo();
@@ -18,27 +26,12 @@ const InfoTasks: React.FC<InfoTasksProps> = ({ setFilterParams }) => {
     }
   };
 
-  const [infoTitle, setInfoTitle] = useState<TodoInfo>({
-    all: 0,
-    completed: 0,
-    inWork: 0,
-  });
   useEffect(() => {
     fetchInfo();
-  }, [infoTitle]);
+  }, []);
 
   return (
     <div className="title_tasks">
-      {/* <button className="tasks_btn" onClick={() => setFilterParams(null)}>
-        все ({infoTitle.all})
-      </button>
-      <button className="tasks_btn" onClick={() => setFilterParams(false)}>
-        в работе ({infoTitle.inWork})
-      </button>
-      <button className="tasks_btn" onClick={() => setFilterParams(true)}>
-        завершено ({infoTitle.completed})
-      </button> */}
-
       <Button type="text" onClick={() => setFilterParams(null)}>
         Все ({infoTitle.all})
       </Button>

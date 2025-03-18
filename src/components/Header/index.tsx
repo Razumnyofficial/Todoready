@@ -1,63 +1,50 @@
 import "./header.css";
 import { useState } from "react";
 import { newTask } from "../api/todos";
-
 import { Input, Button, Form } from "antd";
 
 interface HeaderProps {
-  // newTodo: string;
-  // setnewTodo: (value: string) => void;
-  // addTask: (argument: { isDone: boolean; title: string }) => void;
   fetchData: () => Promise<void>;
 }
 
 const Header: React.FC<HeaderProps> = ({ fetchData }) => {
   const [newTodo, setNewTodo] = useState<string>("");
-  const addTask = async () => {
-    // if (!newTodo.trim()) {
-    //   alert("название задачи не может быть пустым");
-    //   return;
-    // }
-    // if (newTodo.length < 2 || newTodo.length > 64) {
-    //   alert("название задачи должно быть от 2 до 64 символов");
-    //   return;
-    // }
+  const [form] = Form.useForm();
 
+  const addTask = async () => {
     try {
       const response = await newTask({
         title: newTodo,
         isDone: false,
       });
 
-      console.log("Задача появиласбь:", response);
+      console.log("Задача появилась:", response);
 
       await fetchData();
-      setNewTodo("");
+      form.resetFields();
     } catch (error) {
       console.error(error);
       throw error;
     }
   };
+
   return (
     <div className="header">
-      <Form
-        onFinish={addTask} 
-        initialValues={{ title: newTodo }} 
-      >
+      <Form form={form} onFinish={addTask}>
         <Form.Item
           name="title"
           rules={[
             {
               required: true,
-              message: "Название задачи не может быть пустым", 
+              message: "Название задачи не может быть пустым",
             },
             {
               min: 2,
-              message: "Название задачи должно быть не менее 2 символов", 
+              message: "Название задачи должно быть не менее 2 символов",
             },
             {
               max: 64,
-              message: "Название задачи должно быть не более 64 символов", 
+              message: "Название задачи должно быть не более 64 символов",
             },
           ]}
         >
@@ -68,27 +55,12 @@ const Header: React.FC<HeaderProps> = ({ fetchData }) => {
             onChange={(e) => setNewTodo(e.target.value)}
           />
         </Form.Item>
-
         <Form.Item>
-          <Button className="button" type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" className="button">
             Добавить
           </Button>
         </Form.Item>
       </Form>
-
-      {/* <Button type="primary" onClick={() => addTask()}>
-        Добавить
-      </Button> */}
-      {/* <input
-        className="input"
-        placeholder="Task To Be Done..."
-        type="text"
-        value={newTodo}
-        onChange={(e) => setnewTodo(e.target.value)}
-      />
-      <button className="btn_color" onClick={() => addTask()}>
-        Add
-      </button> */}
     </div>
   );
 };

@@ -1,18 +1,12 @@
 import { useEffect, useState } from "react";
 import Tasks from "../components/Tasks";
-import TitleTasks from "../components/TitileTask";
+import TitleTasks from "../components/InfoTasks";
 
 import Header from "../components/Header";
-import {
-  getfetchData,
-  // newTask,
-  deleteTask,
-  updateTask,
-} from "../components/api/todos";
+import { getfetchData } from "../components/api/todos";
 import { Todo } from "../components/types/todos";
 
 function Page() {
-  // const [newTodo, setnewTodo] = useState<string>("");
   const [filterParams, setFilterParams] = useState<boolean | null>(null);
   const [tasksData, setTasksData] = useState<Todo[]>([]);
 
@@ -20,6 +14,7 @@ function Page() {
     try {
       const data = await getfetchData();
       setTasksData(data);
+      // console.log(data);
     } catch (err) {
       console.error("Ошибка при загрузке задач", err);
     }
@@ -29,61 +24,6 @@ function Page() {
     fetchData();
   }, []);
 
-  // const addTask = async () => {
-  //   if (!newTodo.trim()) {
-  //     alert("название задачи не может быть пустым");
-  //     return;
-  //   }
-  //   if (newTodo.length < 2 || newTodo.length > 64) {
-  //     alert("название задачи должно быть от 2 до 64 символов");
-  //     return;
-  //   }
-
-  //   try {
-  //     const response = await newTask({
-  //       title: newTodo,
-  //       isDone: false,
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error("Failed add Task");
-  //     }
-  //     console.log("Задача появиласбь:", response);
-
-  //     await fetchData();
-  //     setnewTodo("");
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-  const removeTask = async (id: number) => {
-    try {
-      const response = await deleteTask(id);
-      console.log("Задача удалилась:", response);
-      await fetchData();
-    } catch (error) {
-      console.error("Ошибка при удалении задачи", error);
-    }
-  };
-
-  const fetchUpdateTask = async (
-    id: number,
-    updatedTitle: string,
-    updatedDone?: boolean
-  ) => {
-    const updatedTask = { title: updatedTitle, isDone: updatedDone };
-
-    try {
-      const response = await updateTask(id, updatedTask);
-
-      await fetchData();
-      console.log(response);
-    } catch (error) {
-      console.log("ошибка при обновлении задачи", error);
-    }
-  };
-
   return (
     <div className="App">
       <div className="backgroundapp">
@@ -91,8 +31,7 @@ function Page() {
         <TitleTasks setFilterParams={setFilterParams} />
         <Tasks
           info={tasksData}
-          fetchupdateTask={fetchUpdateTask}
-          removeItem={removeTask}
+          fetchData={fetchData}
           filterParams={filterParams}
         />
       </div>

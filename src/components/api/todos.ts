@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const getfetchData = async () => {
-  const response = await axios.get("https://easydev.club/api/v1/todos");
+  const response = await axios.get("https://easydev.club/api/v1/todos?");
   const data = response.data.data;
 
   return data;
@@ -26,20 +26,6 @@ export const newTask = async (newTask: { isDone: boolean; title: string }) => {
   );
 
   return response;
-  // try {
-  //   const response = await fetch("https://easydev.club/api/v1/todos", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(newTask),
-  //   });
-
-  //   return response;
-  // } catch (err) {
-  //   console.error(err);
-  //   throw err;
-  // }
 };
 
 export const deleteTask = async (id: number) => {
@@ -48,15 +34,6 @@ export const deleteTask = async (id: number) => {
   );
 
   return response;
-  // try {
-  //   const response = await fetch(`https://easydev.club/api/v1/todos/${id}`, {
-  //     method: "DELETE",
-  //   });
-
-  //   return response;
-  // } catch (error) {
-  //   console.error("Ошибка при удалении задачи", error);
-  // }
 };
 
 export const updateTask = async (
@@ -71,17 +48,4 @@ export const updateTask = async (
     updatedTask
   );
   return response;
-  // try {
-  //   const response = await fetch(`https://easydev.club/api/v1/todos/${id}`, {
-  //     method: "PUT", // используем PATCH для частичного обновления
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(updatedTask),
-  //   });
-
-  //   return response;
-  // } catch (error) {
-  //   console.log("ошибка при обновлении задачи", error); // логируем error;
-  // }
 };
