@@ -2,17 +2,17 @@ import axios from "axios";
 
 export const getfetchData = async () => {
   const response = await axios.get("https://easydev.club/api/v1/todos?");
-  const data = response.data.data;
+  const data = response.data;
 
   return data;
 };
 
-export const getfetchInfo = async () => {
-  const response = await axios.get("https://easydev.club/api/v1/todos");
-  const info = response.data.info;
+// export const getfetchInfo = async () => {
+//   const response = await axios.get("https://easydev.club/api/v1/todos");
+//   const info = response.data.info;
 
-  return info;
-};
+//   return info;
+// };
 
 export const newTask = async (newTask: { isDone: boolean; title: string }) => {
   const response = await axios.post(
