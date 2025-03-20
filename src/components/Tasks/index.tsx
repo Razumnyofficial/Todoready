@@ -5,20 +5,19 @@ import Task from "../Task";
 const Tasks = ({
   fetchData,
   info,
-  filterParams,
 }: {
-  fetchData: () => Promise<void>;
+  fetchData: () => void;
   info: Todo[];
-  filterParams: boolean | null;
+  // filterParams: boolean | null;
 }) => {
-  const progressTasks =
-    filterParams === null
-      ? info.sort((item1, item2) => item2.id - item1.id)
-      : info.filter((item) => item.isDone === filterParams);
+  // const progressTasks =
+  //   filterParams === null
+  //     ? info.sort((item1, item2) => item2.id - item1.id)
+  //     : info.filter((item) => item.isDone === filterParams);
 
   return (
     <div className="datainfo">
-      {progressTasks.map((item) => (
+      {info.map((item) => (
         <Task item={item} key={item.id} fetchData={fetchData} />
       ))}
     </div>

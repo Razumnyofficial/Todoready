@@ -1,7 +1,9 @@
 import axios from "axios";
 
-export const getfetchData = async () => {
-  const response = await axios.get("https://easydev.club/api/v1/todos?");
+export const getfetchData = async (filter?: string) => {
+  const response = await axios.get(
+    `https://easydev.club/api/v1/todos?filter=${filter}`
+  );
   const data = response.data;
 
   return data;

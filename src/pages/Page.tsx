@@ -7,7 +7,7 @@ import { getfetchData } from "../components/api/todos";
 import { Todo, TodoInfo } from "../components/types/todos";
 
 function Page() {
-  const [filterParams, setFilterParams] = useState<boolean | null>(null);
+  // const [filterParams, setFilterParams] = useState<boolean | null>(null);
   const [tasksData, setTasksData] = useState<Todo[]>([]);
   const [InfoTodo, setInfoTodo] = useState<TodoInfo>({
     all: 0,
@@ -15,9 +15,9 @@ function Page() {
     inWork: 0,
   });
 
-  const fetchData = async () => {
+  const fetchData = async (filter: string = "") => {
     try {
-      const data = await getfetchData();
+      const data = await getfetchData(filter);
       setTasksData(data.data);
       setInfoTodo(data.info);
       console.log;
@@ -34,11 +34,15 @@ function Page() {
     <div className="App">
       <div className="backgroundapp">
         <Header fetchData={fetchData} />
-        <InfoTasks setFilterParams={setFilterParams} InfoTodo={InfoTodo} />
+        <InfoTasks
+          // setFilterParams={setFilterParams}
+          InfoTodo={InfoTodo}
+          fetchData={fetchData}
+        />
         <Tasks
           info={tasksData}
           fetchData={fetchData}
-          filterParams={filterParams}
+          // filterParams={filterParams}
         />
       </div>
     </div>

@@ -10,14 +10,7 @@ import { Button, Input } from "antd";
 
 import { deleteTask, updateTask } from "../api/todos";
 
-const Task = ({
-  fetchData,
-  item,
-}: 
-{
-  fetchData: () => Promise<void>;
-  item: Todo;
-}) => {
+const Task = ({ fetchData, item }: { fetchData: () => void; item: Todo }) => {
   const [editingTaskId, setEditingTaskId] = useState(0);
   const [editedTaskName, setEditedTaskName] = useState("");
 
