@@ -1,44 +1,49 @@
 import { TodoInfo } from "../types/todos";
-// import { useEffect, useState } from "react";
+import { useState } from "react";
 // import { getfetchData } from "../api/todos";
 import "./infotasks.css";
 
 import { Button } from "antd";
 
 interface InfoTasksProps {
-  fetchData: (filter: string) => void;
+  fetchData: (filter: "all" | "inWork" | "completed") => void;
   // setFilterParams: (value: boolean | null) => void;
-  InfoTodo: TodoInfo;
+  infoTodo: TodoInfo;
 }
 const InfoTasks: React.FC<InfoTasksProps> = ({
   // setFilterParams,
-  InfoTodo,
+  infoTodo,
   fetchData,
 }) => {
-  const handleFilterChange = (filter: string) => {
+  const [selectedFilter, setSelectedFilter] = useState<string>("all");
+
+  const handleFilterChange = (filter: "all" | "inWork" | "completed") => {
     fetchData(filter);
+    setSelectedFilter(filter);
   };
 
   return (
     <div className="title_tasks">
-      {/* <Button type="text" onClick={() => setFilterParams(null)}>
-        Все ({InfoTodo.all})
+      <Button
+        className={selectedFilter === "all" ? "all" : ""}
+        type="text"
+        onClick={() => handleFilterChange("all")}
+      >
+        Все ({infoTodo.all})
       </Button>
-      <Button type="text" onClick={() => setFilterParams(false)}>
-        В работе ({InfoTodo.inWork})
+      <Button
+        className={selectedFilter === "inWork" ? "inWork" : ""}
+        type="text"
+        onClick={() => handleFilterChange("inWork")}
+      >
+        В работе ({infoTodo.inWork})
       </Button>
-      <Button type="text" onClick={() => setFilterParams(true)}>
-        Завершено ({InfoTodo.completed})
-      </Button> */}
-
-      <Button type="text" onClick={() => handleFilterChange("all")}>
-        Все ({InfoTodo.all})
-      </Button>
-      <Button type="text" onClick={() => handleFilterChange("inWork")}>
-        В работе ({InfoTodo.inWork})
-      </Button>
-      <Button type="text" onClick={() => handleFilterChange("completed")}>
-        Завершено ({InfoTodo.completed})
+      <Button
+        className={selectedFilter === "completed" ? "completed" : ""}
+        type="text"
+        onClick={() => handleFilterChange("completed")}
+      >
+        Завершено ({infoTodo.completed})
       </Button>
     </div>
   );

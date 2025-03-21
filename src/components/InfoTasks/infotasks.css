@@ -19,3 +19,16 @@
   color: rgb(0, 147, 220);
   text-decoration: underline;
 }
+
+.all {
+  color: #fff;
+  background-color: #1677ff;
+}
+.inWork {
+  color: #fff;
+  background-color: #1677ff;
+}
+.completed {
+  color: #fff;
+  background-color: #1677ff;
+}

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const getfetchData = async (filter?: string) => {
+export const getfetchData = async (filter: "all" | "inWork" | "completed") => {
   const response = await axios.get(
     `https://easydev.club/api/v1/todos?filter=${filter}`
   );

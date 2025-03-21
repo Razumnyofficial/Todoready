@@ -9,18 +9,17 @@ import { Todo, TodoInfo } from "../components/types/todos";
 function Page() {
   // const [filterParams, setFilterParams] = useState<boolean | null>(null);
   const [tasksData, setTasksData] = useState<Todo[]>([]);
-  const [InfoTodo, setInfoTodo] = useState<TodoInfo>({
+  const [infoTodo, setInfoTodo] = useState<TodoInfo>({
     all: 0,
     completed: 0,
     inWork: 0,
   });
 
-  const fetchData = async (filter: string = "") => {
+  const fetchData = async (filter: "all" | "inWork" | "completed" = "all") => {
     try {
       const data = await getfetchData(filter);
       setTasksData(data.data);
       setInfoTodo(data.info);
-      console.log;
     } catch (err) {
       console.error("Ошибка при загрузке задач", err);
     }
@@ -36,7 +35,7 @@ function Page() {
         <Header fetchData={fetchData} />
         <InfoTasks
           // setFilterParams={setFilterParams}
-          InfoTodo={InfoTodo}
+          infoTodo={infoTodo}
           fetchData={fetchData}
         />
         <Tasks

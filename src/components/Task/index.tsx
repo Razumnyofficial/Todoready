@@ -11,17 +11,18 @@ import { Button, Input } from "antd";
 import { deleteTask, updateTask } from "../api/todos";
 
 const Task = ({ fetchData, item }: { fetchData: () => void; item: Todo }) => {
-  const [editingTaskId, setEditingTaskId] = useState(0);
+  const [isEdit, setIsEdit] = useState(false);
   const [editedTaskName, setEditedTaskName] = useState("");
 
   const handleEditClick = (item: Todo) => {
-    setEditingTaskId(item.id);
+    setIsEdit(true);
     setEditedTaskName(item.title);
+    console.log(isEdit);
   };
 
   const handleSaveEdit = () => {
-    fetchUpdateTask(editingTaskId, editedTaskName);
-    setEditingTaskId(0);
+    fetchUpdateTask(item.id, editedTaskName);
+    setIsEdit(false);
   };
 
   const removeTask = async (id: number) => {
@@ -62,7 +63,7 @@ const Task = ({ fetchData, item }: { fetchData: () => void; item: Todo }) => {
           }
         />
 
-        {editingTaskId === item.id ? (
+        {isEdit ? (
           // Когда задача в режиме редактирования
           <div className="edit-form">
             <Input
@@ -80,7 +81,7 @@ const Task = ({ fetchData, item }: { fetchData: () => void; item: Todo }) => {
         )}
 
         <div className="icons_btn">
-          {editingTaskId !== item.id ? (
+          {!isEdit ? (
             // Показываем кнопку редактирования только если задача не редактируется
 
             <Button
@@ -122,7 +123,7 @@ const Task = ({ fetchData, item }: { fetchData: () => void; item: Todo }) => {
                   margin: "5px",
                 }}
                 icon={<CloseCircleOutlined />}
-                onClick={() => setEditingTaskId(0)}
+                onClick={() => setIsEdit(false)}
               ></Button>
             </>
           )}
