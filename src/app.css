@@ -1,0 +1,14 @@
+header {
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: 20px;
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  flex-direction: column;
+}
+a {
+  text-decoration: none;
+  color: black;
+  padding: 10px;
+}
