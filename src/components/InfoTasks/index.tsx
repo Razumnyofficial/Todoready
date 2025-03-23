@@ -1,5 +1,5 @@
 import { TodoInfo } from "../types/todos";
-import { useState } from "react";
+// import { useState } from "react";
 // import { getfetchData } from "../api/todos";
 import "./infotasks.css";
 
@@ -9,17 +9,21 @@ interface InfoTasksProps {
   fetchData: (filter: "all" | "inWork" | "completed") => void;
   // setFilterParams: (value: boolean | null) => void;
   infoTodo: TodoInfo;
+  selectedFilter: "all" | "inWork" | "completed";
+  setSelectedFilter: (value: "all" | "inWork" | "completed") => void;
 }
 const InfoTasks: React.FC<InfoTasksProps> = ({
   // setFilterParams,
   infoTodo,
   fetchData,
+  selectedFilter,
+  setSelectedFilter,
 }) => {
-  const [selectedFilter, setSelectedFilter] = useState<string>("all");
+  // const [selectedFilter, setSelectedFilter] = useState<string>("all");
 
   const handleFilterChange = (filter: "all" | "inWork" | "completed") => {
-    fetchData(filter);
     setSelectedFilter(filter);
+    fetchData(filter);
   };
 
   return (

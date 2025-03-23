@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Tasks from "../components/Tasks";
 import InfoTasks from "../components/InfoTasks";
 
@@ -15,19 +15,33 @@ function Page() {
     inWork: 0,
   });
 
-  const fetchData = async (filter: "all" | "inWork" | "completed" = "all") => {
-    try {
-      const data = await getfetchData(filter);
-      setTasksData(data.data);
-      setInfoTodo(data.info);
-    } catch (err) {
-      console.error("Ошибка при загрузке задач", err);
-    }
-  };
+  const [selectedFilter, setSelectedFilter] = useState<
+    "all" | "inWork" | "completed"
+  >("all");
+
+  const fetchData = useCallback(
+    async (filter: "all" | "inWork" | "completed" = selectedFilter) => {
+      try {
+        const data = await getfetchData(filter);
+        setTasksData(data.data);
+        setInfoTodo(data.info);
+      } catch (err) {
+        console.error("Ошибка при загрузке задач", err);
+      }
+    },
+    [selectedFilter]
+  );
 
   useEffect(() => {
     fetchData();
-  }, []);
+
+    const intervalId = setInterval(() => {
+      fetchData();
+      console.log("Задачи обновились");
+    }, 5000);
+
+    return () => clearInterval(intervalId) ;
+  }, [selectedFilter, fetchData]);
 
   return (
     <div className="App">
@@ -37,6 +51,8 @@ function Page() {
           // setFilterParams={setFilterParams}
           infoTodo={infoTodo}
           fetchData={fetchData}
+          selectedFilter={selectedFilter}
+          setSelectedFilter={setSelectedFilter}
         />
         <Tasks
           info={tasksData}
