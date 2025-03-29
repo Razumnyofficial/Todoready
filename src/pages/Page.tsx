@@ -4,7 +4,7 @@ import InfoTasks from "../components/InfoTasks";
 
 import Header from "../components/Header";
 import { getfetchData } from "../components/api/todos";
-import { Todo, TodoInfo } from "../components/types/todos";
+import { FilterParams, Todo, TodoInfo } from "../components/types/todos";
 
 function Page() {
   // const [filterParams, setFilterParams] = useState<boolean | null>(null);
@@ -15,12 +15,10 @@ function Page() {
     inWork: 0,
   });
 
-  const [selectedFilter, setSelectedFilter] = useState<
-    "all" | "inWork" | "completed"
-  >("all");
+  const [selectedFilter, setSelectedFilter] = useState<FilterParams>("all");
 
   const fetchData = useCallback(
-    async (filter: "all" | "inWork" | "completed" = selectedFilter) => {
+    async (filter: FilterParams = selectedFilter) => {
       try {
         const data = await getfetchData(filter);
         setTasksData(data.data);
@@ -40,7 +38,7 @@ function Page() {
       console.log("Задачи обновились");
     }, 5000);
 
-    return () => clearInterval(intervalId) ;
+    return () => clearInterval(intervalId);
   }, [selectedFilter, fetchData]);
 
   return (

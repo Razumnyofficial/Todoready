@@ -10,3 +10,6 @@ export interface TodoInfo {
   completed: number;
   inWork: number;
 }
+
+export type FilterParams = "all" | "inWork" | "completed";
+  
