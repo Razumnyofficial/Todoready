@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Checkbox, Form, Input, Flex, notification } from "antd";
 
 import { saveToken } from "../../utils/utils";
 import { postSignIn, postSignUp } from "../../api/auth";
+import styles from "./LoginComponents.module.css";
 
-const LoginComponent: React.FC = () => {
+const LoginComponent = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -47,7 +48,7 @@ const LoginComponent: React.FC = () => {
 
   return (
     <div>
-      <h2>{isLogin ? "Login" : "Registration"}</h2>
+      <h2 className={styles.title}>{isLogin ? "Login" : "Registration"}</h2>
       <Form
         layout="vertical"
         name="login"

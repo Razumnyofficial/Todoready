@@ -7,7 +7,7 @@ const FullLogin = () => {
     <div className={styles.wrapper}>
       <img src={ImginLogin} alt="" />
       <div>
-        <h1 className={styles.titlelogin}>Login to your Account</h1>
+        <h1 className={styles.titlelogin}>Welcome to your Account</h1>
         <p className={styles.undertitle}>
           See what is going on wish ypor business
         </p>
