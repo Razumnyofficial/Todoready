@@ -7,20 +7,17 @@ import { Button } from "antd";
 
 interface InfoTasksProps {
   fetchData: (filter: FilterParams) => void;
-  // setFilterParams: (value: boolean | null) => void;
+
   infoTodo: TodoInfo;
   selectedFilter: FilterParams;
   setSelectedFilter: (value: FilterParams) => void;
 }
 const InfoTasks: React.FC<InfoTasksProps> = ({
-  // setFilterParams,
   infoTodo,
   fetchData,
   selectedFilter,
   setSelectedFilter,
 }) => {
-  // const [selectedFilter, setSelectedFilter] = useState<string>("all");
-
   const handleFilterChange = (filter: FilterParams) => {
     setSelectedFilter(filter);
     fetchData(filter);

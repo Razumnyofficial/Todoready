@@ -8,13 +8,7 @@ const Tasks = ({
 }: {
   fetchData: () => void;
   info: Todo[];
-  // filterParams: boolean | null;
 }) => {
-  // const progressTasks =
-  //   filterParams === null
-  //     ? info.sort((item1, item2) => item2.id - item1.id)
-  //     : info.filter((item) => item.isDone === filterParams);
-
   return (
     <div className="datainfo">
       {info.map((item) => (
