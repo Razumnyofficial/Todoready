@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FilterParams } from "../types/todos";
+import { FilterParams } from "../components/types/todos";
 
 export const getfetchData = async (filter: FilterParams) => {
   const response = await axios.get(

@@ -12,3 +12,13 @@ a {
   color: black;
   padding: 10px;
 }
+
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #7f265b !important;
+  border-color: #7f265b !important;
+}
+
+.ant-checkbox-checked:hover .ant-checkbox-inner {
+  background-color: #7f265b !important;
+  border-color: #7f265b !important;
+}

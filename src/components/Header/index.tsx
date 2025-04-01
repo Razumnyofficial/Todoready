@@ -1,6 +1,6 @@
 import "./header.css";
 import { useState } from "react";
-import { newTask } from "../api/todos";
+import { newTask } from "../../api/todos";
 import { Input, Button, Form } from "antd";
 
 interface HeaderProps {
