@@ -5,9 +5,13 @@ import InfoTasks from "../components/InfoTasks";
 import Header from "../components/Header";
 import { getfetchData } from "../components/api/todos";
 import { FilterParams, Todo, TodoInfo } from "../components/types/todos";
+import React from "react";
+
+const MemoHeader = React.memo(Header);
+const MemoInfoTasks = React.memo(InfoTasks);
+const MemoTasks = React.memo(Tasks);
 
 function Page() {
-  // const [filterParams, setFilterParams] = useState<boolean | null>(null);
   const [tasksData, setTasksData] = useState<Todo[]>([]);
   const [infoTodo, setInfoTodo] = useState<TodoInfo>({
     all: 0,
@@ -44,18 +48,18 @@ function Page() {
   return (
     <div className="App">
       <div className="backgroundapp">
-        <Header fetchData={fetchData} />
-        <InfoTasks
-          // setFilterParams={setFilterParams}
+        <MemoHeader fetchData={fetchData} />
+        <MemoInfoTasks
+          
           infoTodo={infoTodo}
           fetchData={fetchData}
           selectedFilter={selectedFilter}
           setSelectedFilter={setSelectedFilter}
         />
-        <Tasks
+        <MemoTasks
           info={tasksData}
           fetchData={fetchData}
-          // filterParams={filterParams}
+         
         />
       </div>
     </div>
