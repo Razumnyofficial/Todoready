@@ -23,7 +23,7 @@ const LoginComponent = () => {
         console.log(data);
         saveToken(data.accessToken, data.refreshToken);
         notification.success({
-          message: "Login Success",
+          message: "Registration was successful",
         });
       } else {
         const data = await postSignUp(
@@ -41,6 +41,10 @@ const LoginComponent = () => {
       }
     } catch (error) {
       console.log(error);
+      notification.error({
+        message: "Error",
+        description: "Incorrectly entered data, try again",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -60,7 +64,7 @@ const LoginComponent = () => {
           <Form.Item
             name="email"
             label="Email"
-            rules={[{ required: true, message: "Please input your email!" }]}
+            rules={[{ required: true, message: " Email должен быть валидным" }]}
           >
             <Input placeholder="Email" />
           </Form.Item>
@@ -69,7 +73,11 @@ const LoginComponent = () => {
         <Form.Item
           label="Login"
           name="login"
-          rules={[{ required: true, message: "Please input your Login!" }]}
+          rules={[
+            { required: true, message: "Логин от 2 до 60 символов" },
+            { min: 2, message: "Логин должен быть не менее 2 символов" },
+            { max: 60, message: "Логин должен быть не более 60 символов" },
+          ]}
         >
           <Input placeholder="Login" />
         </Form.Item>
@@ -77,7 +85,11 @@ const LoginComponent = () => {
         <Form.Item
           label="Password"
           name="password"
-          rules={[{ required: true, message: "Please input your Password!" }]}
+          rules={[
+            { required: true, message: "Пароль от 6 до 60 символов" },
+            { min: 6, message: "Пароль должен быть не менее 6 символов" },
+            { max: 60, message: "Пароль должен быть не более 60 символов" },
+          ]}
         >
           <Input type="password" placeholder="Password" />
         </Form.Item>
@@ -87,7 +99,7 @@ const LoginComponent = () => {
             label="PhoneNumber"
             name="phoneNumber"
             rules={[
-              { required: true, message: "Please input your phoneNumber!" },
+              { required: true, message: "Телефон должен быть валидным" },
             ]}
           >
             <Input placeholder="PhoneNumber" />
@@ -98,7 +110,14 @@ const LoginComponent = () => {
           <Form.Item
             label="UserName"
             name="username"
-            rules={[{ required: true, message: "Please input your UserName!" }]}
+            rules={[
+              {
+                required: true,
+                message: "Имя пользователя от 1 до 60 символов",
+              },
+              { min: 1, message: "Имя пользователя должен быть не менее 1 символов" },
+              { max: 60, message: "Имя пользователя должен быть не более 60 символов" },
+            ]}
           >
             <Input placeholder="UserName" />
           </Form.Item>
@@ -121,10 +140,14 @@ const LoginComponent = () => {
                 ? "Dont have an account? Sign Up"
                 : "Already have an account? Login"}
             </a> */}
-            <Button type="link" onClick={() => setIsLogin(!isLogin)}>
+            <Button
+              style={{ color: "#7f265b" }}
+              type="link"
+              onClick={() => setIsLogin(!isLogin)}
+            >
               {isLogin
-                ? "Don't have an account? Sign Up"
-                : "Already have an account? Login"}
+                ? "You have no account? Sign up"
+                : "Do you have an account? Sign in"}
             </Button>
           </Flex>
         </Form.Item>
@@ -142,7 +165,7 @@ const LoginComponent = () => {
             htmlType="submit"
             loading={isLoading}
           >
-            {isLogin ? "Login" : "Registration"}
+            {isLogin ? "Login" : "Register"}
           </Button>
         </Form.Item>
 
@@ -152,7 +175,7 @@ const LoginComponent = () => {
               postLogOut();
             }}
           >
-            Выйти
+            Log out
           </Button>
         </Form.Item>
       </Form>

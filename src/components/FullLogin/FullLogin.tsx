@@ -11,9 +11,9 @@ const FullLogin = () => {
         <p className={styles.undertitle}>We are glad to see you again</p>
       </div>
       <LoginComponent />
-      <p className={styles.notregister}>
+      {/* <p className={styles.notregister}>
         Not Register Yet? <a  href="">Create an account</a>
-      </p>
+      </p> */}
     </div>
   );
 };
