@@ -29,7 +29,7 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { path: "/", element: <PageTodo /> },
+      { index: true, element: <PageTodo /> },
       { path: "/auth", element: <PageAuth /> },
     ],
   },

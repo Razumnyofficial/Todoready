@@ -1,5 +1,5 @@
 .wrapper {
-  margin-left: 250px;
+  margin-left: 200px;
   margin-top: 150px;
 }
 
@@ -20,12 +20,12 @@
 }
 .notregister {
   font-size: 18px;
-  width: 376px;
+  width: 400px;
   height: 25px;
   font-weight: 400;
   color: #525252;
   margin: auto;
-  padding-top: 300px;
+  padding-top: 200px;
 }
 
 a {
