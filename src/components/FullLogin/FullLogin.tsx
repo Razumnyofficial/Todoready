@@ -8,13 +8,11 @@ const FullLogin = () => {
       <img src={ImginLogin} alt="" />
       <div>
         <h1 className={styles.titlelogin}>Welcome to your Account</h1>
-        <p className={styles.undertitle}>
-          See what is going on wish ypor business
-        </p>
+        <p className={styles.undertitle}>We are glad to see you again</p>
       </div>
       <LoginComponent />
       <p className={styles.notregister}>
-        Not Register Yet? <a href="">Create an account</a>
+        Not Register Yet? <a  href="">Create an account</a>
       </p>
     </div>
   );

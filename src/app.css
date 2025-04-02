@@ -9,7 +9,7 @@ header {
 }
 a {
   text-decoration: none;
-  color: black;
+  color: #7f265b;
   padding: 10px;
 }
 
@@ -21,4 +21,7 @@ a {
 .ant-checkbox-checked:hover .ant-checkbox-inner {
   background-color: #7f265b !important;
   border-color: #7f265b !important;
+}
+li {
+  list-style-type: none;
 }

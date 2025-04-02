@@ -55,6 +55,7 @@ export const postLogOut = async () => {
   try {
     await axios.post(
       "https://easydev.club/api/v1/user/logout",
+      {},
 
       {
         headers: {
@@ -77,6 +78,7 @@ export const getUser = async () => {
   try {
     const response = await axios.get(
       "https://easydev.club/api/v1/user/profile",
+
       {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("token")}`,
