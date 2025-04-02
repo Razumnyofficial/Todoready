@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Checkbox, Form, Input, Flex, notification } from "antd";
 
 import { saveToken } from "../../utils/utils";
-import { postSignIn, postSignUp } from "../../api/auth";
+import { postLogOut, postSignIn, postSignUp } from "../../api/auth";
 import styles from "./LoginComponents.module.css";
 
 const LoginComponent = () => {
@@ -21,7 +21,7 @@ const LoginComponent = () => {
       if (isLogin) {
         const data = await postSignIn(values.login, values.password);
         console.log(data);
-        saveToken(data.token, data.refreshToken);
+        saveToken(data.accessToken, data.refreshToken);
         notification.success({
           message: "Login Success",
         });
@@ -34,7 +34,7 @@ const LoginComponent = () => {
           values.username
         );
         console.log(data);
-        saveToken(data.token, data.refreshToken);
+        // saveToken(data.token, data.refreshToken);
         notification.success({
           message: "Registration Success",
         });
@@ -143,6 +143,16 @@ const LoginComponent = () => {
             loading={isLoading}
           >
             {isLogin ? "Login" : "Registration"}
+          </Button>
+        </Form.Item>
+
+        <Form.Item>
+          <Button
+            onClick={() => {
+              postLogOut();
+            }}
+          >
+            Выйти
           </Button>
         </Form.Item>
       </Form>

@@ -1,17 +1,17 @@
 // сохраняем токен в локал
 
 export const saveToken = (token: string, refreshToken: string) => {
-    localStorage.setItem("token", token);
-    localStorage.setItem("refreshToken", refreshToken);
-}
+  sessionStorage.setItem("token", token);
+  sessionStorage.setItem("refreshToken", refreshToken);
+};
 
 // получаем токены из локала
-export const getToken =() =>{
-    return localStorage.getItem("token");
-}
+export const getToken = () => {
+  return sessionStorage.getItem("token");
+};
 
 // удаляем токены из локала
 export const removeToken = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("refreshToken");
-}
+  sessionStorage.removeItem("token");
+  sessionStorage.removeItem("refreshToken");
+};

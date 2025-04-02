@@ -55,20 +55,20 @@ export const postLogOut = async () => {
   try {
     await axios.post(
       "https://easydev.club/api/v1/user/logout",
-      {},
+
       {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
         },
       }
     );
     console.log("Выход из системы");
-    console.log(localStorage.getItem("token"));
+    console.log(sessionStorage.getItem("token"));
 
-    localStorage.removeItem("token");
-    localStorage.removeItem("refreshToken");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("refreshToken");
   } catch (error) {
-    console.log(error + "Ошибка при выходе ");
+    console.log(error + " Ошибка при выходе ");
     throw error;
   }
 };
@@ -79,7 +79,7 @@ export const getUser = async () => {
       "https://easydev.club/api/v1/user/profile",
       {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
         },
       }
     );
@@ -94,7 +94,7 @@ export const getUser = async () => {
 
 export const refreshToken = async () => {
   try {
-    const refreshToken = localStorage.getItem("refreshToken");
+    const refreshToken = sessionStorage.getItem("refreshToken");
     if (!refreshToken) throw new Error("Refresh token not found");
     const response = await axios.post(
       "https://easydev.club/api/v1/auth/refresh",
