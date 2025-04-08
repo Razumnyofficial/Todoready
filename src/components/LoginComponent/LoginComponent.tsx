@@ -3,9 +3,16 @@ import { Button, Checkbox, Form, Input, Flex, notification } from "antd";
 
 import { saveToken } from "../../utils/utils";
 import { postLogOut, postSignIn, postSignUp } from "../../api/auth";
+import { useNavigate } from "react-router-dom";
 import styles from "./LoginComponents.module.css";
 
+
+
+
 const LoginComponent = () => {
+
+  const navigate = useNavigate();
+
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -25,6 +32,7 @@ const LoginComponent = () => {
         notification.success({
           message: "Registration was successful",
         });
+        navigate("/");
       } else {
         const data = await postSignUp(
           values.email,

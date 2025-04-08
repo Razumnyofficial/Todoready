@@ -2,26 +2,12 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import PageTodo from "./pages/PageTodo";
 import PageAuth from "./pages/PageAuth";
-
-import "./App.css";
 import ErrorPage from "./pages/ErrorPage";
 import RootLayout from "./pages/RootLayout";
 
-// function App() {
-//   return (
-//     <>
-//       <header>
-//         <Link to="/">PageTodo </Link>
-//         <Link to="/auth">PageAuth </Link>
-//       </header>
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 
-//       <Routes>
-//         <Route path="/" element={<PageTodo />} />
-//         <Route path="/auth" element={<PageAuth />} />
-//       </Routes>
-//     </>
-//   );
-// }
+import "./App.css";
 
 const router = createBrowserRouter([
   {
@@ -29,7 +15,14 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <PageTodo /> },
+      {
+        index: true,
+        element: (
+          <PrivateRoute>
+            <PageTodo />
+          </PrivateRoute>
+        ),
+      },
       { path: "/auth", element: <PageAuth /> },
     ],
   },
