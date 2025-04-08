@@ -1,10 +1,14 @@
 .wrapper {
-  margin-left: 200px;
-  margin-top: 150px;
+  display: flex;
+  margin-left: 150px;
+}
+.login_and_register {
+  margin-left: 150px;
+  text-align: center;
 }
 
 .titlelogin {
-  padding-top: 10px;
+  padding-top: 100px;
   font-size: 26px;
   width: 376px;
   height: 49px;
