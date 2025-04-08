@@ -10,6 +10,7 @@ const LoginForm = () => {
   const onFinish = async (values: { login: string; password: string }) => {
     try {
       const data = await postSignIn(values.login, values.password);
+
       saveToken(data.accessToken, data.refreshToken);
       notification.success({ message: "Вход выполнен успешно" });
       navigate("/");
@@ -57,7 +58,12 @@ const LoginForm = () => {
         <Button
           type="primary"
           htmlType="submit"
-          style={{ width: 200, height: 45, backgroundColor: "#7f265b", marginTop: 50 }}
+          style={{
+            width: 200,
+            height: 45,
+            backgroundColor: "#7f265b",
+            marginTop: 50,
+          }}
         >
           Войти
         </Button>

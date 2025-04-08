@@ -59,15 +59,15 @@ export const postLogOut = async () => {
 
       {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       }
     );
     console.log("Выход из системы");
-    console.log(sessionStorage.getItem("token"));
+    console.log(localStorage.getItem("accessToken"));
 
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("refreshToken");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
   } catch (error) {
     console.log(error + " Ошибка при выходе ");
     throw error;
@@ -81,7 +81,7 @@ export const getUser = async () => {
 
       {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       }
     );
@@ -96,7 +96,8 @@ export const getUser = async () => {
 
 export const refreshToken = async () => {
   try {
-    const refreshToken = sessionStorage.getItem("refreshToken");
+    const refreshToken = localStorage.getItem("refreshToken");
+
     if (!refreshToken) throw new Error("Refresh token not found");
     const response = await axios.post(
       "https://easydev.club/api/v1/auth/refresh",
@@ -106,9 +107,10 @@ export const refreshToken = async () => {
     );
     console.log(response);
 
-    const { token, refreshToken: newRefreshToken } = response.data;
-    saveToken(token, newRefreshToken);
-    return token;
+    const { accessToken, refreshToken: newRefreshToken } = response.data;
+
+    saveToken(accessToken, newRefreshToken);
+    return accessToken;
   } catch (error) {
     console.log(error + "Ошибка при обновлении токена");
   }

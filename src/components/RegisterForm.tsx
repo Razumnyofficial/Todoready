@@ -46,7 +46,7 @@ const RegisterForm = () => {
     >
       <Form.Item
         name="email"
-        label="Email"
+        label="email"
         rules={[{ required: true, message: "Введите корректный email" }]}
       >
         <Input placeholder="email" />
