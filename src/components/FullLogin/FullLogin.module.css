@@ -1,9 +1,11 @@
 .wrapper {
   display: flex;
-  margin-left: 150px;
+  height: 100vh;
+  width: 100vw;
+  
 }
 .login_and_register {
-  margin-left: 150px;
+  margin: auto;
   text-align: center;
 }
 

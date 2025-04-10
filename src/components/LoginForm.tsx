@@ -28,7 +28,7 @@ const LoginForm = () => {
       form={form}
       layout="vertical"
       onFinish={onFinish}
-      style={{ display: "block", maxWidth: 420, width: "100%", marginTop: 50 }}
+      style={{ display: "block", maxWidth: 420, width: "100%", marginTop: 50, }}
     >
       <Form.Item
         label="login"

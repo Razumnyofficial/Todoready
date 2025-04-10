@@ -42,7 +42,7 @@ const LoginComponent = () => {
           values.username
         );
         console.log(data);
-        // saveToken(data.token, data.refreshToken);
+        saveToken(data.accessToken, data.refreshToken);
         notification.success({
           message: "Registration Success",
         });
