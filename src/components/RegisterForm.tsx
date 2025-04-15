@@ -79,7 +79,7 @@ const RegisterForm = () => {
       <Form.Item
         name="phoneNumber"
         label="phoneNumber"
-        rules={[{ required: true, message: "Введите номер телефона" }]}
+        rules={[]}
       >
         <Input placeholder="phoneNumber" />
       </Form.Item>
