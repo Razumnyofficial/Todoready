@@ -28,15 +28,27 @@ const LoginForm = () => {
       form={form}
       layout="vertical"
       onFinish={onFinish}
-      style={{ display: "block", maxWidth: 420, width: "100%", marginTop: 50, }}
+      style={{ display: "block", maxWidth: 420, width: "100%", marginTop: 50 }}
     >
       <Form.Item
         label="login"
         name="login"
         rules={[
           { required: true, message: "Логин от 2 до 60 символов" },
-          { min: 2, message: "Логин должен быть не менее 2 символов" },
-          { max: 60, message: "Логин должен быть не более 60 символов" },
+          {
+            min: 2,
+            message:
+              "Логин должен быть не менее 2 символов латинского алфавита",
+          },
+          {
+            max: 60,
+            message:
+              "Логин должен быть не более 60 символов латинского алфавита",
+          },
+          {
+            pattern: /^[a-zA-Z]+$/,
+            message: "Логин должен состоять только из латинского алфавита",
+          },
         ]}
       >
         <Input placeholder="login" />
