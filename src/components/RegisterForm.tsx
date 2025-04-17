@@ -1,6 +1,7 @@
 import { Button, Form, Input, notification } from "antd";
 import { useNavigate } from "react-router-dom";
 import { postSignUp } from "../api/auth";
+import { ValidateErrorEntity } from "rc-field-form/lib/interface";
 // import styles from "./AuthForm.module.css";
 
 interface RegisterFormValues {
@@ -38,12 +39,23 @@ const RegisterForm = () => {
     }
   };
 
+  const onFinishFailed = (
+    errorInfo: ValidateErrorEntity<RegisterFormValues>
+  ) => {
+    console.log("Failed:", errorInfo);
+    notification.error({
+      message: "Ошибка регистрации",
+      description: "Проверьте данные и попробуйте снова",
+    });
+  };
+
   return (
     <Form
       form={form}
       layout="vertical"
       style={{ display: "block", maxWidth: 420, width: "100%", marginTop: 50 }}
       onFinish={onFinish}
+      onFinishFailed={onFinishFailed}
     >
       <Form.Item
         name="email"
@@ -122,11 +134,13 @@ const RegisterForm = () => {
           },
           {
             min: 1,
-            message: "Имя пользователя должен быть не менее 1 символов латинского алфавита",
+            message:
+              "Имя пользователя должен быть не менее 1 символов латинского алфавита",
           },
           {
             max: 60,
-            message: "Имя пользователя должен быть не более 60 символов латинского алфавита",
+            message:
+              "Имя пользователя должен быть не более 60 символов латинского алфавита",
           },
           {
             pattern: /^[a-zA-Z]+$/,
