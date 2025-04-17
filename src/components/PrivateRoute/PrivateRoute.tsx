@@ -8,7 +8,7 @@ interface Props {
 
 const PrivateRoute = ({ children }: Props) => {
   const token = getToken();
-  return token ? children : <Navigate to="/auth" replace />;
+  return token ? children : <Navigate to="/login" replace />;
 };
 
 export default PrivateRoute;
