@@ -29,7 +29,7 @@ const RegisterForm = () => {
 
       notification.success({ message: "Регистрация прошла успешно" });
       form.resetFields();
-      navigate("/auth/login");
+      navigate("/login");
     } catch (error) {
       console.log(error);
       notification.error({
@@ -60,7 +60,11 @@ const RegisterForm = () => {
       <Form.Item
         name="email"
         label="email"
-        rules={[{ required: true, message: "Введите корректный email" }]}
+        rules={[
+          { required: true, message: "Введите корректный email" },
+          { type: "email", message: "Некорректный email!" },
+          
+        ]}
       >
         <Input placeholder="email" />
       </Form.Item>
