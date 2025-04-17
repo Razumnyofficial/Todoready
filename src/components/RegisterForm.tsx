@@ -7,6 +7,7 @@ interface RegisterFormValues {
   email: string;
   login: string;
   password: string;
+  confirmPassword: string;
   phoneNumber: string;
   username: string;
 }
@@ -26,8 +27,8 @@ const RegisterForm = () => {
       );
 
       notification.success({ message: "Регистрация прошла успешно" });
-      form.resetFields(); 
-      navigate("/auth/login"); 
+      form.resetFields();
+      navigate("/auth/login");
     } catch (error) {
       console.log(error);
       notification.error({
@@ -57,8 +58,16 @@ const RegisterForm = () => {
         label="login"
         rules={[
           { required: true, message: "Логин от 2 до 60 символов" },
-          { min: 2, message: "Логин должен быть не менее 2 символов" },
-          { max: 60, message: "Логин должен быть не более 60 символов" },
+          {
+            min: 2,
+            message:
+              "Логин должен быть не менее 2 символов латинского алфавита",
+          },
+          {
+            max: 60,
+            message:
+              "Логин должен быть не более 60 символов латинского алфавита",
+          },
         ]}
       >
         <Input placeholder="login" />
@@ -77,10 +86,25 @@ const RegisterForm = () => {
       </Form.Item>
 
       <Form.Item
-        name="phoneNumber"
-        label="phoneNumber"
-        rules={[]}
+        name="confirmPassword"
+        label="confirmPassword"
+        dependencies={["password"]}
+        rules={[
+          { required: true, message: "Пароли не совпадают" },
+          ({ getFieldValue }) => ({
+            validator(_, value) {
+              if (!value || getFieldValue("password") === value) {
+                return Promise.resolve();
+              }
+              return Promise.reject(new Error("Пароли не совпадают!"));
+            },
+          }),
+        ]}
       >
+        <Input type="password" placeholder="confirmPassword" />
+      </Form.Item>
+
+      <Form.Item name="phoneNumber" label="phoneNumber" rules={[]}>
         <Input placeholder="phoneNumber" />
       </Form.Item>
 
