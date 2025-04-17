@@ -63,7 +63,6 @@ const RegisterForm = () => {
         rules={[
           { required: true, message: "Введите корректный email" },
           { type: "email", message: "Некорректный email!" },
-          
         ]}
       >
         <Input placeholder="email" />
@@ -124,7 +123,17 @@ const RegisterForm = () => {
         <Input type="password" placeholder="confirmPassword" />
       </Form.Item>
 
-      <Form.Item name="phoneNumber" label="phoneNumber" rules={[]}>
+      <Form.Item
+        name="phoneNumber"
+        label="phoneNumber"
+        rules={[
+          { required: true, message: "Введите номер телефона" },
+          {
+            pattern: /^\+7\d{10}$/,
+            message: "Номер телефона должен быть в формате +7XXXXXXXXXX",
+          },
+        ]}
+      >
         <Input placeholder="phoneNumber" />
       </Form.Item>
 
