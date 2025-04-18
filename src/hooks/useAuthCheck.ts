@@ -8,17 +8,29 @@ const useAuthCheck = () => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const token = getToken();
+      try {
+        const token = getToken();
+        const refreshTokenValue = localStorage.getItem("refreshToken");
 
-      if (!token) {
-        const newToken = await refreshToken();
-
-        if (!newToken) {
-          console.log("Redirecting to login...");
-          navigate("/login");
-        } else {
-          console.log("Token successfully refreshed");
+        if (!token && refreshTokenValue) {
+          try {
+            const newToken = await refreshToken();
+            if (newToken) {
+              console.log("токен обновился");
+              return;
+            }
+          } catch (error) {
+            console.error("Ошибка рефреша", error);
+          }
         }
+
+        if (!token && !refreshTokenValue) {
+          console.log("Нет токенов");
+          navigate("/login");
+        }
+      } catch (error) {
+        console.error("Ошибка Авторизации", error);
+        navigate("/login");
       }
     };
 
