@@ -145,7 +145,7 @@ const RegisterForm = () => {
             name="phoneNumber"
             label="phoneNumber"
             rules={[
-              { required: true, message: "Введите номер телефона" },
+              { required: false, message: "Введите номер телефона" },
               {
                 pattern: /^\+7\d{10}$/,
                 message: "Номер телефона должен быть в формате +7XXXXXXXXXX",
