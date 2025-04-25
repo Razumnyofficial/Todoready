@@ -1,27 +1,22 @@
 import api from "./api";
 // import { saveToken } from "../utils/utils";
-import  TokenStorage  from "../utils/TokenStorage";
+import TokenStorage from "../utils/TokenStorage";
 
+interface RegisterData {
+  email: string;
+  login: string;
+  password: string;
+  phoneNumber: string;
+  username: string;
+}
 
 export const postSignIn = async (login: string, password: string) => {
   const response = await api.post("/auth/signin", { login, password });
   return response.data;
 };
 
-export const postSignUp = async (
-  email: string,
-  login: string,
-  password: string,
-  phoneNumber: string,
-  username: string
-) => {
-  const response = await api.post("/auth/signup", {
-    email,
-    login,
-    password,
-    phoneNumber,
-    username,
-  });
+export const postSignUp = async (regData: RegisterData) => {
+  const response = await api.post("/auth/signup", regData);
   return response.data;
 };
 

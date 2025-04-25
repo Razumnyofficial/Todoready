@@ -1,6 +1,6 @@
 import ImginLogin from "../../assets/Ilustr.png";
 import styles from "./FullLogin.module.css";
-import { Outlet} from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 const FullLogin = () => {
   // const location = useLocation();

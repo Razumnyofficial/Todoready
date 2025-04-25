@@ -22,13 +22,7 @@ const RegisterForm = () => {
   const onFinish = async (values: RegisterFormValues) => {
     try {
       console.log("начало регестрации");
-      const response = await postSignUp(
-        values.email,
-        values.login,
-        values.password,
-        values.phoneNumber,
-        values.username
-      );
+      const response = await postSignUp(values);
 
       console.log("ответ от сервера", response);
 
@@ -202,7 +196,7 @@ const RegisterForm = () => {
           <h2>Регистрация прошла успешно!</h2>
 
           <Link
-            to="/login"
+            to="/auth/login"
             style={{
               display: "flex",
               textAlign: "center",
