@@ -10,7 +10,6 @@ const LoginForm = () => {
   const onFinish = async (values: { login: string; password: string }) => {
     try {
       const data = await postSignIn(values.login, values.password);
-
       saveToken(data.accessToken, data.refreshToken);
       notification.success({ message: "Вход выполнен успешно" });
       navigate("/");
