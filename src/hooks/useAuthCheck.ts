@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { refreshToken } from "../api/auth";
-import { getToken } from "../utils/utils";
+import TokenStorage from "../utils/TokenStorage";
+  // import { getToken } from "../utils/utils";
 
 const useAuthCheck = () => {
   const navigate = useNavigate();
@@ -9,8 +10,10 @@ const useAuthCheck = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const token = getToken();
-        const refreshTokenValue = localStorage.getItem("refreshToken");
+        // const token = getToken();
+        const token = TokenStorage.getAccessToken();
+        // const refreshTokenValue = localStorage.getItem("refreshToken");
+        const refreshTokenValue = TokenStorage.getRefreshToken();
 
         if (!token && refreshTokenValue) {
           try {
@@ -26,11 +29,11 @@ const useAuthCheck = () => {
 
         if (!token && !refreshTokenValue) {
           console.log("Нет токенов");
-          navigate("/login");
+          navigate("/auth/login");
         }
       } catch (error) {
         console.error("Ошибка Авторизации", error);
-        navigate("/login");
+        navigate("/auth/login");
       }
     };
 

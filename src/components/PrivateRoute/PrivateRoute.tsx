@@ -1,7 +1,8 @@
 import { Navigate } from "react-router-dom";
-import { getToken } from "../../utils/utils";
 import React, { useEffect, useState } from "react";
 import { refreshToken } from "../../api/auth";
+import  TokenStorage  from "../../utils/TokenStorage";
+// import { getToken } from "../../utils/utils";
 
 interface Props {
   children: React.ReactNode;
@@ -12,8 +13,10 @@ const PrivateRoute = ({ children }: Props) => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const token = getToken();
-      const refreshTokenValue = localStorage.getItem("refreshToken");
+      // const token = getToken();
+      const token = TokenStorage.getAccessToken();
+      // const refreshTokenValue = localStorage.getItem("refreshToken");
+      const refreshTokenValue = TokenStorage.getRefreshToken();
 
       if (token) {
         setIsAuthenticated(true);
@@ -40,7 +43,7 @@ const PrivateRoute = ({ children }: Props) => {
     return null;
   }
 
-  return isAuthenticated ? children : <Navigate to="/login" replace />;
+  return isAuthenticated ? children : <Navigate to="/auth/login" replace />;
 };
 
 export default PrivateRoute;

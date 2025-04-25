@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import  TokenStorage  from "../utils/TokenStorage";
 import { refreshToken } from "./auth";
 
 const api = axios.create({
@@ -7,7 +7,8 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  const accessToken = localStorage.getItem("accessToken");
+  // const accessToken = localStorage.getItem("accessToken");
+  const accessToken = TokenStorage.getAccessToken();
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
   }
@@ -28,8 +29,9 @@ api.interceptors.response.use(
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return api(originalRequest);
       } catch (refreshError) {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
+        // localStorage.removeItem("accessToken");
+        // localStorage.removeItem("refreshToken");
+        TokenStorage.removeTokens();
         window.location.href = "/login";
         return Promise.reject(refreshError);
       }
