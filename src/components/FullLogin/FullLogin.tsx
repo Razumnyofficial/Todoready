@@ -1,10 +1,10 @@
 import ImginLogin from "../../assets/Ilustr.png";
 import styles from "./FullLogin.module.css";
-import { Outlet, Link, useLocation } from "react-router-dom";
+import { Outlet} from "react-router-dom";
 
 const FullLogin = () => {
-  const location = useLocation();
-  const isLoginPage = location.pathname === "/auth/login";
+  // const location = useLocation();
+  // const isLoginPage = location.pathname === "/auth/login";
 
   return (
     <div className={styles.wrapper}>
@@ -14,7 +14,7 @@ const FullLogin = () => {
         <p className={styles.undertitle}>We are glad to see you again</p>
         <Outlet />
 
-        <p className={styles.notregister}>
+        {/* <p className={styles.notregister}>
           {isLoginPage ? (
             <>
               Not registered yet? <Link to="/auth/register">Create an account</Link>
@@ -24,7 +24,7 @@ const FullLogin = () => {
               Already have an account? <Link to="/auth/login">Login</Link>
             </>
           )}
-        </p>
+        </p> */}
       </div>
     </div>
   );
