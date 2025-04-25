@@ -20,7 +20,7 @@ function MainNavigation() {
           </li>
           <li>
             <NavLink
-              to="/login"
+              to="/auth/login"
               className={({ isActive }) =>
                 isActive ? classes.active : undefined
               }

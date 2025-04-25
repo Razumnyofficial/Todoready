@@ -40,7 +40,7 @@ const ProfilePage = () => {
     try {
       await postLogOut();
       notification.success({ message: "Вы вышли из системы" });
-      navigate("/login");
+      navigate("/auth/login");
     } catch (error) {
       console.log(error);
       notification.error({

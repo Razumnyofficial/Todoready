@@ -4,7 +4,7 @@ import { Outlet, Link, useLocation } from "react-router-dom";
 
 const FullLogin = () => {
   const location = useLocation();
-  const isLoginPage = location.pathname === "/login";
+  const isLoginPage = location.pathname === "/auth/login";
 
   return (
     <div className={styles.wrapper}>
@@ -17,11 +17,11 @@ const FullLogin = () => {
         <p className={styles.notregister}>
           {isLoginPage ? (
             <>
-              Not registered yet? <Link to="/register">Create an account</Link>
+              Not registered yet? <Link to="/auth/register">Create an account</Link>
             </>
           ) : (
             <>
-              Already have an account? <Link to="/login">Login</Link>
+              Already have an account? <Link to="/auth/login">Login</Link>
             </>
           )}
         </p>

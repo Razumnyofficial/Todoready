@@ -31,29 +31,15 @@ const router = createBrowserRouter([
         path: "/profile",
         element: <ProfilePage />,
       },
-      // {
-      //   path: "/login",
-      //   element: <FullLogin />,
-      //   children: [{ index: true, element: <PageLogin /> }],
-      // },
-      // {
-      //   path: "/register",
-      //   element: <FullLogin />,
-      //   children: [{ index: true, element: <PageRegister /> }],
-      // },
+      
     ],
   },
+  {path: "/auth", element: <FullLogin />, children: [
+    {path: "login", element: <PageLogin />},
+    {path: "register", element: <PageRegister />},
+  ]},
 
-  {
-    path: "/login",
-    element: <FullLogin />,
-    children: [{ index: true, element: <PageLogin /> }],
-  },
-  {
-    path: "/register",
-    element: <FullLogin />,
-    children: [{ index: true, element: <PageRegister /> }],
-  },
+  
 ]);
 
 function App() {
