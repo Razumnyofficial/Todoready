@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import { refreshToken } from "@/api/auth";
+import { getUser, refreshToken } from "@/api/auth";
 import TokenStorage from "@/utils/TokenStorage";
 // import { getToken } from "../../utils/utils";
 
@@ -13,16 +13,12 @@ const PrivateRoute = ({ children }: Props) => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      // const token = getToken();
       const token = TokenStorage.getAccessToken();
-      // const refreshTokenValue = localStorage.getItem("refreshToken");
       const refreshTokenValue = TokenStorage.getRefreshToken();
-
       if (!token && !refreshTokenValue) {
         setIsAuthenticated(false);
         return;
       }
-
       if (token) {
         try {
           await getUser();
@@ -46,7 +42,6 @@ const PrivateRoute = ({ children }: Props) => {
           return;
         }
       }
-
       if (refreshTokenValue) {
         try {
           const newToken = await refreshToken();
@@ -62,14 +57,12 @@ const PrivateRoute = ({ children }: Props) => {
 
       setIsAuthenticated(false);
     };
-
     checkAuth();
   }, []);
 
   if (isAuthenticated === null) {
     return <div>Loading...</div>;
   }
-
   return isAuthenticated ? <>{children}</> : <Navigate to="/auth/login" />;
 };
 
