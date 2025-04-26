@@ -3,15 +3,10 @@ import { Link } from "react-router-dom";
 import { postSignUp } from "@/api/auth";
 import { ValidateErrorEntity } from "rc-field-form/lib/interface";
 import { useState } from "react";
+import { RegisterFormValues } from "@/types/authTypes";
 // import styles from "./AuthForm.module.css";
 
-interface RegisterFormValues {
-  email: string;
-  login: string;
-  password: string;
-  phoneNumber: string;
-  username: string;
-}
+
 
 const RegisterForm = () => {
   const [form] = Form.useForm<RegisterFormValues>();

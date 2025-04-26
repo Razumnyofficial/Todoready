@@ -1,14 +1,7 @@
 import api from "./api";
-// import { saveToken } from "../utils/utils";
 import TokenStorage from "../utils/TokenStorage";
+import { RegisterData } from "@/types/authTypes";
 
-interface RegisterData {
-  email: string;
-  login: string;
-  password: string;
-  phoneNumber: string;
-  username: string;
-}
 
 export const postSignIn = async (login: string, password: string) => {
   const response = await api.post("/auth/signin", { login, password });

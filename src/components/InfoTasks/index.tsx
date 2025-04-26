@@ -1,6 +1,4 @@
-import { FilterParams, TodoInfo } from "@/components/types/todos";
-// import { useState } from "react";
-// import { getfetchData } from "../api/todos";
+import { FilterParams, TodoInfo } from "@/types/todos";
 import "./infotasks.css";
 
 import { Button } from "antd";

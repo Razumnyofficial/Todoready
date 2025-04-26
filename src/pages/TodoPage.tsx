@@ -3,7 +3,7 @@ import Tasks from "@/components/Tasks";
 import InfoTasks from "@/components/InfoTasks";
 import Header from "@/components/Header";
 import { getfetchData } from "@/api/todos";
-import { FilterParams, Todo, TodoInfo } from "@/components/types/todos";
+import { FilterParams, Todo, TodoInfo } from "@/types/todos";
 import React from "react";
 
 const MemoHeader = React.memo(Header);

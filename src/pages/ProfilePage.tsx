@@ -2,20 +2,11 @@ import { Button, Card, notification } from "antd";
 import { useEffect, useState } from "react";
 import { getUser, postLogOut } from "@/api/auth";
 import { useNavigate } from "react-router-dom";
+import { User } from "@/types/authTypes";
 
 const ProfilePage = () => {
-  interface User {
-    date: string;
-    email: string;
-    id: number;
-    isAdmin: boolean;
-    isBlocked: boolean;
-    phoneNumber: string;
-    username: string;
-  }
 
   const [user, setUser] = useState<User | null>(null);
-
   const navigate = useNavigate();
 
   useEffect(() => {

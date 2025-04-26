@@ -1,5 +1,5 @@
 import "./tasks.css";
-import { Todo } from "@/components/types/todos";
+import { Todo } from "@/types/todos";
 import Task from "@/components/Task";
 
 const Tasks = ({
