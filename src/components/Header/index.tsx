@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { newTask } from "../../api/todos";
+import { newTask } from "@/api/todos";
 import { Input, Button, Form } from "antd";
 
 import styles from "./header.module.css";

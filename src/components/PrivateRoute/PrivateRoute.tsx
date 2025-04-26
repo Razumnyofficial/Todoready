@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import { refreshToken } from "../../api/auth";
-import  TokenStorage  from "../../utils/TokenStorage";
+import { refreshToken } from "@/api/auth";
+import TokenStorage from "@/utils/TokenStorage";
 // import { getToken } from "../../utils/utils";
 
 interface Props {
