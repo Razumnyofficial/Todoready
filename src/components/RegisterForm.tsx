@@ -9,7 +9,6 @@ interface RegisterFormValues {
   email: string;
   login: string;
   password: string;
-  confirmPassword: string;
   phoneNumber: string;
   username: string;
 }

@@ -61,7 +61,7 @@ const PrivateRoute = ({ children }: Props) => {
   }, []);
 
   if (isAuthenticated === null) {
-    return <div>Loading...</div>;
+    return null
   }
   return isAuthenticated ? <>{children}</> : <Navigate to="/auth/login" />;
 };

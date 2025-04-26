@@ -1,6 +1,6 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-import PageTodo from "@/pages/PageTodo";
+import PageTodo from "@/pages/TodoPage";
 
 import ErrorPage from "@/pages/ErrorPage";
 // import RootLayout from "./pages/RootLayout";
@@ -8,8 +8,8 @@ import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
 import "./App.css";
 import FullLogin from "@/components/FullLogin/FullLogin";
 
-import PageLogin from "@/pages/PageLogin";
-import PageRegister from "@/pages/PageRegister";
+import PageLogin from "@/pages/LoginPage";
+import PageRegister from "@/pages/RegisterPage";
 import ProfilePage from "@/pages/ProfilePage";
 import SideMenuLayout from "@/pages/SideMenuLayout";
 
