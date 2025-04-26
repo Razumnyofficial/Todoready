@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { refreshToken } from "../api/auth";
-import TokenStorage from "../utils/TokenStorage";
-  // import { getToken } from "../utils/utils";
+import { refreshToken } from "@/api/auth";
+import TokenStorage from "@/utils/TokenStorage";
+// import { getToken } from "../utils/utils";
 
 const useAuthCheck = () => {
   const navigate = useNavigate();

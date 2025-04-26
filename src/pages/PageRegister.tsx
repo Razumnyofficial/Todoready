@@ -1,6 +1,6 @@
-import RegisterForm from "../components/RegisterForm";
+import RegisterForm from "@/components/RegisterForm";
 import { Link } from "react-router-dom";
-import styles from "../components/FullLogin/FullLogin.module.css";
+import styles from "@/components/FullLogin/FullLogin.module.css";
 
 const PageRegister = () => {
   return (

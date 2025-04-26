@@ -18,9 +18,33 @@ const PrivateRoute = ({ children }: Props) => {
       // const refreshTokenValue = localStorage.getItem("refreshToken");
       const refreshTokenValue = TokenStorage.getRefreshToken();
 
-      if (token) {
-        setIsAuthenticated(true);
+      if (!token && !refreshTokenValue) {
+        setIsAuthenticated(false);
         return;
+      }
+
+      if (token) {
+        try {
+          await getUser();
+          setIsAuthenticated(true);
+          return;
+        } catch (error) {
+
+          if (refreshTokenValue) {
+            try {
+              const newToken = await refreshToken();
+              if (newToken) {
+                setIsAuthenticated(true);
+                return;
+              }
+            } catch (refreshError) {
+              setIsAuthenticated(false);
+              return;
+            }
+          }
+          setIsAuthenticated(false);
+          return;
+        }
       }
 
       if (refreshTokenValue) {
@@ -31,19 +55,22 @@ const PrivateRoute = ({ children }: Props) => {
             return;
           }
         } catch (error) {
-          console.error("Error refreshing token:", error);
+          setIsAuthenticated(false);
+          return;
         }
       }
+
       setIsAuthenticated(false);
     };
+
     checkAuth();
   }, []);
 
   if (isAuthenticated === null) {
-    return null;
+    return <div>Loading...</div>;
   }
 
-  return isAuthenticated ? children : <Navigate to="/auth/login" replace />;
+  return isAuthenticated ? <>{children}</> : <Navigate to="/auth/login" />;
 };
 
 export default PrivateRoute;

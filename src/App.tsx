@@ -1,17 +1,17 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-import PageTodo from "./pages/PageTodo";
+import PageTodo from "@/pages/PageTodo";
 
-import ErrorPage from "./pages/ErrorPage";
+import ErrorPage from "@/pages/ErrorPage";
 // import RootLayout from "./pages/RootLayout";
-import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
 import "./App.css";
-import FullLogin from "./components/FullLogin/FullLogin";
+import FullLogin from "@/components/FullLogin/FullLogin";
 
-import PageLogin from "./pages/PageLogin";
-import PageRegister from "./pages/PageRegister";
-import ProfilePage from "./pages/ProfilePage";
-import SideMenuLayout from "./pages/SideMenuLayout";
+import PageLogin from "@/pages/PageLogin";
+import PageRegister from "@/pages/PageRegister";
+import ProfilePage from "@/pages/ProfilePage";
+import SideMenuLayout from "@/pages/SideMenuLayout";
 
 const router = createBrowserRouter([
   {
@@ -31,15 +31,17 @@ const router = createBrowserRouter([
         path: "/profile",
         element: <ProfilePage />,
       },
-      
+
     ],
   },
-  {path: "/auth", element: <FullLogin />, children: [
-    {path: "login", element: <PageLogin />},
-    {path: "register", element: <PageRegister />},
-  ]},
+  {
+    path: "/auth", element: <FullLogin />, children: [
+      { path: "login", element: <PageLogin /> },
+      { path: "register", element: <PageRegister /> },
+    ]
+  },
 
-  
+
 ]);
 
 function App() {

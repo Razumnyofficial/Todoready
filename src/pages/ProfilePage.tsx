@@ -1,6 +1,6 @@
 import { Button, Card, notification } from "antd";
 import { useEffect, useState } from "react";
-import { getUser, postLogOut } from "../api/auth";
+import { getUser, postLogOut } from "@/api/auth";
 import { useNavigate } from "react-router-dom";
 
 const ProfilePage = () => {

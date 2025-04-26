@@ -1,6 +1,6 @@
 import { Button, Form, Input, notification } from "antd";
 import { Link } from "react-router-dom";
-import { postSignUp } from "../api/auth";
+import { postSignUp } from "@/api/auth";
 import { ValidateErrorEntity } from "rc-field-form/lib/interface";
 import { useState } from "react";
 // import styles from "./AuthForm.module.css";
