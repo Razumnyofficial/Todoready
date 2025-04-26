@@ -1,10 +1,13 @@
+import { Outlet } from "react-router-dom";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { refreshToken } from "@/api/auth";
 import TokenStorage from "@/utils/TokenStorage";
-// import { getToken } from "../utils/utils";
+// import useAuthCheck from "@/hooks/useAuthCheck";
+import SideMenu from "@/components/SideMenu";
 
-const useAuthCheck = () => {
+function SideMenuLayout() {
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,6 +42,14 @@ const useAuthCheck = () => {
 
     checkAuth();
   }, [navigate]);
-};
+  ;
 
-export default useAuthCheck;
+  return (
+    <>
+      <SideMenu />
+      <Outlet />
+    </>
+  );
+}
+
+export default SideMenuLayout;

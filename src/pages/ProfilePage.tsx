@@ -23,7 +23,7 @@ const ProfilePage = () => {
       try {
         const data = await getUser();
         setUser(data);
-        console.log(data);
+
       } catch (error) {
         console.log(error);
         notification.error({

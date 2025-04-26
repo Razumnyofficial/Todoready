@@ -1,7 +1,7 @@
 import { Button, Form, Input, notification } from "antd";
 import { useNavigate } from "react-router-dom";
 import { postSignIn } from "@/api/auth";
-import { saveToken } from "@/utils/utils";
+import TokenStorage from "@/utils/TokenStorage";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ const LoginForm = () => {
   const onFinish = async (values: { login: string; password: string }) => {
     try {
       const data = await postSignIn(values.login, values.password);
-      saveToken(data.accessToken, data.refreshToken);
+      TokenStorage.saveTokens(data.accessToken, data.refreshToken);
       notification.success({ message: "Вход выполнен успешно" });
       navigate("/");
     } catch (error) {

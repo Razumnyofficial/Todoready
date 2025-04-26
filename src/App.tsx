@@ -11,7 +11,7 @@ import FullLogin from "@/components/FullLogin/FullLogin";
 import PageLogin from "@/pages/LoginPage";
 import PageRegister from "@/pages/RegisterPage";
 import ProfilePage from "@/pages/ProfilePage";
-import SideMenuLayout from "@/pages/SideMenuLayout";
+import SideMenuLayout from "@/layouts/SideMenuLayout";
 
 const router = createBrowserRouter([
   {
