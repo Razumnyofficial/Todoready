@@ -1,32 +1,20 @@
 import ImginLogin from "../../assets/Ilustr.png";
 import styles from "./FullLogin.module.css";
 import { Outlet } from "react-router-dom";
+import { Typography, Image } from "antd";
+
+const { Paragraph } = Typography;
 
 const FullLogin = () => {
-  // const location = useLocation();
-  // const isLoginPage = location.pathname === "/auth/login";
-
   return (
-    <div className={styles.wrapper}>
-      <img src={ImginLogin} alt="login" />
-      <div className={styles.login_and_register}>
-        <h1 className={styles.titlelogin}>Welcome to your Account</h1>
-        <p className={styles.undertitle}>We are glad to see you again</p>
+    <Typography style={{ display: "flex", height: "100%", width: "100%" }}>
+      <Image src={ImginLogin} alt="login" />
+      <Typography style={{ margin: "auto", textAlign: "center" }}>
+        <Typography.Title level={1} style={{ paddingTop: 100, fontSize: 26, width: 376, height: 49, fontWeight: 700, color: "#525252" }}>Welcome to your Account</Typography.Title>
+        <Paragraph style={{ paddingTop: 100, fontSize: 26, width: 376, height: 49, fontWeight: 700, color: "#525252" }}>We are glad to see you again</Paragraph>
         <Outlet />
-
-        {/* <p className={styles.notregister}>
-          {isLoginPage ? (
-            <>
-              Not registered yet? <Link to="/auth/register">Create an account</Link>
-            </>
-          ) : (
-            <>
-              Already have an account? <Link to="/auth/login">Login</Link>
-            </>
-          )}
-        </p> */}
-      </div>
-    </div>
+      </Typography>
+    </Typography>
   );
 };
 
