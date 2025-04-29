@@ -19,6 +19,10 @@ const SideMenu = () => {
       key: "/profile",
       label: <Link to="/profile">Profile</Link>,
     },
+    {
+      key: "/users",
+      label: <Link to="/users">Users</Link>
+    }
   ];
 
   return (
