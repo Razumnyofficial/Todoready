@@ -1,7 +1,7 @@
 header {
   font-size: 18px;
   font-weight: bold;
-  margin-left: 20px;
+
   display: flex;
   align-items: flex-start;
   margin-bottom: 10px;
@@ -9,6 +9,22 @@ header {
 }
 a {
   text-decoration: none;
-  color: black;
+  color: #7f265b;
   padding: 10px;
+}
+
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #7f265b !important;
+  border-color: #7f265b !important;
+}
+
+.ant-checkbox-checked:hover .ant-checkbox-inner {
+  background-color: #7f265b !important;
+  border-color: #7f265b !important;
+}
+li {
+  list-style-type: none;
+}
+.ant-menu-item-selected {
+  background-color: #d9d9d9 !important;
 }

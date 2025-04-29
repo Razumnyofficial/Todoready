@@ -1,8 +1,8 @@
-import "./header.css";
 import { useState } from "react";
-import { newTask } from "../api/todos";
+import { newTask } from "@/api/todos";
 import { Input, Button, Form } from "antd";
 
+import styles from "./header.module.css";
 interface HeaderProps {
   fetchData: () => Promise<void>;
 }
@@ -29,7 +29,7 @@ const Header: React.FC<HeaderProps> = ({ fetchData }) => {
   };
 
   return (
-    <div className="header">
+    <div className={styles.header}>
       <Form form={form} onFinish={addTask}>
         <Form.Item
           name="title"
@@ -56,7 +56,7 @@ const Header: React.FC<HeaderProps> = ({ fetchData }) => {
           />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit" className="button">
+          <Button type="primary" htmlType="submit" className={styles.button}>
             Добавить
           </Button>
         </Form.Item>

@@ -1,24 +1,51 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-import Page from "./pages/Page";
-import Profile from "./pages/Profile";
+import PageTodo from "@/pages/TodoPage";
 
-import "./app.css";
+import ErrorPage from "@/pages/ErrorPage";
+// import RootLayout from "./pages/RootLayout";
+import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
+import "./App.css";
+import FullLogin from "@/components/FullLogin/FullLogin";
+
+import PageLogin from "@/pages/LoginPage";
+import PageRegister from "@/pages/RegisterPage";
+import ProfilePage from "@/pages/ProfilePage";
+import SideMenuLayout from "@/layouts/SideMenuLayout";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <SideMenuLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: (
+          <PrivateRoute>
+            <PageTodo />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/profile",
+        element: <ProfilePage />,
+      },
+
+    ],
+  },
+  {
+    path: "/auth", element: <FullLogin />, children: [
+      { path: "login", element: <PageLogin /> },
+      { path: "register", element: <PageRegister /> },
+    ]
+  },
+
+
+]);
 
 function App() {
-  return (
-    <>
-      <header>
-        <Link to="/">TodoList </Link>
-        <Link to="/profile">Profile </Link>
-      </header>
-
-      <Routes>
-        <Route path="/" element={<Page />} />
-        <Route path="/profile" element={<Profile />} />
-      </Routes>
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

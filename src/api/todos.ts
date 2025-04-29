@@ -10,13 +10,6 @@ export const getfetchData = async (filter: FilterParams) => {
   return data;
 };
 
-// export const getfetchInfo = async () => {
-//   const response = await axios.get("https://easydev.club/api/v1/todos");
-//   const info = response.data.info;
-
-//   return info;
-// };
-
 export const newTask = async (newTask: { isDone: boolean; title: string }) => {
   const response = await axios.post(
     "https://easydev.club/api/v1/todos",

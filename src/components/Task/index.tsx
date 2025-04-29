@@ -5,10 +5,10 @@ import {
   EditOutlined,
   SaveOutlined,
 } from "@ant-design/icons";
-import { Todo } from "../types/todos";
+import { Todo } from "@/types/todos";
 import { Button, Input } from "antd";
 
-import { deleteTask, updateTask } from "../api/todos";
+import { deleteTask, updateTask } from "@/api/todos";
 
 const Task = ({ fetchData, item }: { fetchData: () => void; item: Todo }) => {
   const [isEdit, setIsEdit] = useState(false);
