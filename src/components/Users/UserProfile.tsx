@@ -1,19 +1,18 @@
-import { getUser } from "@/api/users";
-import { notification } from "antd";
+import { getUser, updateUser } from "@/api/users";
+import { Button, Form, Input, notification } from "antd";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { User } from "@/types/authTypes";
 
-
-
 const UserProfile = () => {
+    const { id } = useParams<{ id: string }>();
+    const navigate = useNavigate();
 
-    const { id } = useParams<{ id: string }>()
-
-    const [profileUser, setProfileUser] = useState<User | null>(null)
+    const [profileUser, setProfileUser] = useState<User | null>(null);
+    const [isEditing, setIsEditing] = useState(false);
+    const [form] = Form.useForm();
 
     useEffect(() => {
-
         if (!id) return;
 
         const numericId = Number(id);
@@ -29,10 +28,9 @@ const UserProfile = () => {
             try {
                 const data = await getUser(numericId);
                 setProfileUser(data);
-
-
+                form.setFieldsValue(data);
             } catch (error) {
-                console.log(error);
+                console.error(error);
                 notification.error({
                     message: "Ошибка",
                     description: "Не удалось загрузить данные пользователя",
@@ -41,20 +39,69 @@ const UserProfile = () => {
         };
 
         fetchUser();
-        console.log(profileUser)
-    }, [id]);
+    }, [id, form]);
 
-    if (!profileUser) return <div>Загрузка</div>
+    const onSave = async () => {
+        try {
+            const values = await form.validateFields();
+            const numericId = Number(id);
+
+            await updateUser(numericId, values);
+            const updated = await getUser(numericId);
+            setProfileUser(updated);
+
+            notification.success({
+                message: "Успешно",
+                description: "Данные пользователя обновлены",
+            });
+
+            setIsEditing(false);
+        } catch (error) {
+            console.error(error);
+            notification.error({
+                message: "Ошибка",
+                description: "Не удалось обновить пользователя",
+            });
+        }
+    };
+
+    if (!profileUser) return <div>Загрузка...</div>;
 
     return (
-        <div>
-            <h2>Профиль польщователя</h2>
-            <p>Имя : {profileUser.username}</p>
-            <p>Email : {profileUser.email}</p>
-            <p>Телефон : {profileUser.phoneNumber}</p>
 
-        </div>
-    )
-}
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <div style={{ maxWidth: 600, }} >
+                <h2>Профиль пользователя</h2>
+
+                <Form layout="vertical" form={form} style={{ display: "flex", justifyContent: "center", flexDirection: "column" }} >
+                    <Form.Item label="Имя пользователя" name="username">
+                        <Input disabled={!isEditing} />
+                    </Form.Item>
+                    <Form.Item label="Email" name="email" >
+                        <Input disabled={!isEditing} />
+                    </Form.Item>
+                    <Form.Item label="Телефон" name="phoneNumber">
+                        <Input disabled={!isEditing} />
+                    </Form.Item>
+                </Form>
+
+                <div style={{ marginLeft: 40 }}>
+                    {!isEditing ? (
+                        <Button type="primary" onClick={() => setIsEditing(true)}>
+                            Редактировать
+                        </Button>
+                    ) : (
+                        <Button type="primary" onClick={onSave}>
+                            Сохранить
+                        </Button>
+                    )}
+                    <Button style={{ marginLeft: 8 }} onClick={() => navigate("/users")}>
+                        Назад
+                    </Button>
+                </div>
+            </div >
+        </div >
+    );
+};
 
 export default UserProfile;

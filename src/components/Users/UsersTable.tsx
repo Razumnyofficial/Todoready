@@ -1,7 +1,10 @@
-import { Table, Tag, Input, Button, Space } from "antd";
+
+import { Table, Tag, Input, Button, Space, notification } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { blockUser, unblockUser } from "@/api/users";
+
 
 
 interface User {
@@ -16,11 +19,12 @@ interface User {
 
 interface Props {
     users: User[];
+    handleDelete: (id: number) => void;
+    fetchUsers: () => void
 }
 
-const UsersTable = ({ users }: Props) => {
+const UsersTable = ({ users, handleDelete, fetchUsers }: Props) => {
     const [search, setSearch] = useState("");
-
     const navigate = useNavigate();
 
 
@@ -29,6 +33,22 @@ const UsersTable = ({ users }: Props) => {
             usercheak.username.toLowerCase().includes(search.toLowerCase()) ||
             usercheak.email.toLowerCase().includes(search.toLowerCase())
     );
+
+    const handleBlockToggle = async (user: User) => {
+        try {
+            if (user.isBlocked) {
+                await unblockUser(user.id);
+                notification.success({ message: "Пользователь разблокирован" });
+            } else {
+                await blockUser(user.id);
+                notification.success({ message: "Пользователь заблокирован" });
+            }
+
+            await fetchUsers();
+        } catch (error) {
+            notification.error({ message: "Ошибка при обновлении блокировки" });
+        }
+    };
 
     const columns: ColumnsType<User> = [
         {
@@ -83,14 +103,18 @@ const UsersTable = ({ users }: Props) => {
             key: "action",
             render: (_, user) => (
                 <Space>
-                    <Button size="small" type={user.isBlocked ? "default" : "primary"}>
+                    <Button size="small" onClick={() => handleBlockToggle(user)} type={user.isBlocked ? "default" : "primary"}>
                         {user.isBlocked ? "Разблок" : "Блок"}
                     </Button>
                     <Button size="small" onClick={() => navigate(`/users/${user.id}`)}>Профиль</Button>
+                    <Button size="small" onClick={() => handleDelete(user.id)} style={{ background: "red", color: "white" }}>Удалить</Button>
                 </Space>
             ),
         },
     ];
+
+
+
 
     return (
         <div style={{}}>
@@ -107,7 +131,7 @@ const UsersTable = ({ users }: Props) => {
                     columns={columns}
                     dataSource={filteredUsers}
                     rowKey="id"
-                    pagination={{ pageSize: 20 }}
+                    pagination={{ pageSize: 5 }}
                 />
             </div>
         </div>
