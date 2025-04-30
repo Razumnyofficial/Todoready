@@ -1,6 +1,8 @@
 import { Table, Tag, Input, Button, Space } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 interface User {
     id: number;
@@ -18,6 +20,9 @@ interface Props {
 
 const UsersTable = ({ users }: Props) => {
     const [search, setSearch] = useState("");
+
+    const navigate = useNavigate();
+
 
     const filteredUsers = users.filter(
         (usercheak) =>
@@ -66,7 +71,7 @@ const UsersTable = ({ users }: Props) => {
             title: "Блокировка",
 
             key: "isBlocked",
-            render: (_, users) => (users.isBlocked ? "Да" : "-"),
+            render: (_, user) => (user.isBlocked ? "Да" : "-"),
         },
         {
             title: "Дата регистр.",
@@ -81,7 +86,7 @@ const UsersTable = ({ users }: Props) => {
                     <Button size="small" type={user.isBlocked ? "default" : "primary"}>
                         {user.isBlocked ? "Разблок" : "Блок"}
                     </Button>
-                    <Button size="small">⋯</Button>
+                    <Button size="small" onClick={() => navigate(`/users/${user.id}`)}>Профиль</Button>
                 </Space>
             ),
         },

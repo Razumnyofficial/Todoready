@@ -13,6 +13,7 @@ import PageRegister from "@/pages/RegisterPage";
 import ProfilePage from "@/pages/ProfilePage";
 import SideMenuLayout from "@/layouts/SideMenuLayout";
 import Users from "./pages/PageUsers";
+import UserProfile from "./components/Users/UserProfile";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "/users",
         element: <Users />
+      },
+      {
+        path: "/users/:id",
+        element: <UserProfile />
       }
 
     ],
