@@ -3,7 +3,6 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import PageTodo from "@/pages/TodoPage";
 
 import ErrorPage from "@/pages/ErrorPage";
-// import RootLayout from "./pages/RootLayout";
 import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
 import "./App.css";
 import FullLogin from "@/components/FullLogin/FullLogin";

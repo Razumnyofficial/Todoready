@@ -27,7 +27,7 @@ const RegisterForm = () => {
         });
         form.resetFields();
         setIsRegister(true);
-        // navigate("/login");
+        
       }
     } catch (error) {
       console.log("Ошибка регестрации", error);

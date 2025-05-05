@@ -14,3 +14,9 @@ export interface User {
     isBlocked: boolean;
     date: string;
 }
+
+export interface dataProps {
+    users: User[];
+    handleDelete: (id: number) => void;
+    fetchUsers: () => void
+}
