@@ -2,16 +2,7 @@ import { useEffect, useState } from "react";
 import { deleteUser, getUsers } from "../api/users";
 import UsersTable from "../components/Users/UsersTable";
 import { notification } from "antd";
-
-export interface User {
-    id: number;
-    username: string;
-    email: string;
-    phoneNumber: string;
-    roles: string[];
-    isBlocked: boolean;
-    date: string;
-}
+import { User } from "@/types/usersTypes";
 
 const PageUsers = () => {
     const [users, setUsers] = useState<User[]>([]);
@@ -24,6 +15,7 @@ const PageUsers = () => {
             setUsers(response.data.data);
         } catch (e) {
             console.error(e);
+            notification.error({ message: "Ошибка при загрузке пользователей" });
         } finally {
             setLoading(false);
         }

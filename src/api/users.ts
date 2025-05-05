@@ -1,4 +1,5 @@
 import apiUsers from "./apiUsers";
+import { Roles } from "@/types/usersTypes";
 
 export const getUsers = async () => {
     const response = await apiUsers.get("/users");
@@ -27,4 +28,10 @@ export const blockUser = async (id: number) => {
 export const unblockUser = async (id: number) => {
     const response = await apiUsers.post(`/users/${id}/unblock`);
     return response.data
+}
+
+
+export const updateUserRoles = async (userId: number, roles: Roles[]) => {
+    const response = await apiUsers.post(`/users/${userId}/rights`, { roles });
+    return response.data;
 }

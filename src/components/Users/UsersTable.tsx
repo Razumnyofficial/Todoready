@@ -1,32 +1,14 @@
-
 import { Table, Tag, Input, Button, Space, notification } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { blockUser, unblockUser } from "@/api/users";
+import RoleManagement from "./RoleManagement";
+import {  User, dataProps } from "@/types/usersTypes";
 
-
-
-interface User {
-    id: number;
-    username: string;
-    email: string;
-    phoneNumber: string;
-    roles: string[];
-    isBlocked: boolean;
-    date: string;
-}
-
-interface Props {
-    users: User[];
-    handleDelete: (id: number) => void;
-    fetchUsers: () => void
-}
-
-const UsersTable = ({ users, handleDelete, fetchUsers }: Props) => {
+const UsersTable = ({ users, handleDelete, fetchUsers }: dataProps) => {
     const [search, setSearch] = useState("");
     const navigate = useNavigate();
-
 
     const filteredUsers = users.filter(
         (usercheak) =>
@@ -43,7 +25,6 @@ const UsersTable = ({ users, handleDelete, fetchUsers }: Props) => {
                 await blockUser(user.id);
                 notification.success({ message: "Пользователь заблокирован" });
             }
-
             await fetchUsers();
         } catch (error) {
             notification.error({ message: "Ошибка при обновлении блокировки" });
@@ -78,6 +59,7 @@ const UsersTable = ({ users, handleDelete, fetchUsers }: Props) => {
                         if (role === "ADMIN") color = "red";
                         else if (role === "MODERATOR") color = "purple";
                         else if (role === "HUILA") color = "yellow";
+                        else if (role === "USER") color = "green";
                         return (
                             <Tag key={role} color={color}>
                                 {role}
@@ -89,7 +71,6 @@ const UsersTable = ({ users, handleDelete, fetchUsers }: Props) => {
         },
         {
             title: "Блокировка",
-
             key: "isBlocked",
             render: (_, user) => (user.isBlocked ? "Да" : "-"),
         },
@@ -108,16 +89,14 @@ const UsersTable = ({ users, handleDelete, fetchUsers }: Props) => {
                     </Button>
                     <Button size="small" onClick={() => navigate(`/users/${user.id}`)}>Профиль</Button>
                     <Button size="small" onClick={() => handleDelete(user.id)} style={{ background: "red", color: "white" }}>Удалить</Button>
+                    <RoleManagement userId={user.id} currentRoles={user.roles} onSuccess={fetchUsers} />
                 </Space>
             ),
         },
     ];
 
-
-
-
     return (
-        <div style={{}}>
+        <div>
             <div>
                 <Space style={{ marginBottom: 16 }}>
                     <Input

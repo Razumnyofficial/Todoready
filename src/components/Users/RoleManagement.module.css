@@ -1,0 +1,142 @@
+.roleManagement {
+    display: inline-block;
+}
+
+.roleButton {
+    padding: 5px 10px;
+    background-color: #1890ff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.roleButton:hover {
+    background-color: #40a9ff;
+}
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    background-color: white;
+    border-radius: 8px;
+    width: 500px;
+    max-width: 90%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.modalHeader {
+    padding: 16px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modalHeader h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #666;
+}
+
+.closeButton:hover {
+    color: #333;
+}
+
+.modalBody {
+    padding: 16px;
+}
+
+.currentRoles h3 {
+    margin-top: 0;
+    font-size: 16px;
+}
+
+.rolesList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.roleItem {
+    background-color: #f5f5f5;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.removeRoleButton {
+    background: none;
+    border: none;
+    color: #ff4d4f;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0 4px;
+}
+
+.removeRoleButton:hover {
+    color: #ff7875;
+}
+
+.removeRoleButton:disabled {
+    color: #d9d9d9;
+    cursor: not-allowed;
+}
+
+.addRole h3 {
+    margin-top: 0;
+    font-size: 16px;
+}
+
+.roleSelect {
+    padding: 8px;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    margin-right: 8px;
+    width: 200px;
+}
+
+.roleSelect:disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+}
+
+.addRoleButton {
+    padding: 8px 16px;
+    background-color: #52c41a;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.addRoleButton:hover {
+    background-color: #73d13d;
+}
+
+.addRoleButton:disabled {
+    background-color: #d9d9d9;
+    cursor: not-allowed;
+} 
