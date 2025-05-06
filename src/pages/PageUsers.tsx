@@ -41,7 +41,7 @@ const PageUsers = () => {
     return (
         <div style={{ padding: "20px" }}>
             <h1>Пользователи</h1>
-            {loading ? <h1>Загрузка...</h1> : <UsersTable users={users} handleDelete={handleDelete} fetchUsers={fetchUsers} />}
+            {loading ? <h1>Загрузка...</h1> : <UsersTable users={users} handleDelete={handleDelete} fetchUsers={fetchUsers} setUsers={setUsers} />}
         </div>
     );
 };

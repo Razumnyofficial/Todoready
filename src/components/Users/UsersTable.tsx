@@ -1,20 +1,16 @@
-import { Table, Tag, Input, Button, Space, notification } from "antd";
+import { Table, Tag, Button, Space, notification, Input } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { blockUser, unblockUser } from "@/api/users";
+import { blockUser, getUsers, unblockUser } from "@/api/users";
 import RoleManagement from "./RoleManagement";
-import {  User, dataProps } from "@/types/usersTypes";
+import { SortOrder, User, dataProps } from "@/types/usersTypes";
+// import { useState } from "react";
 
-const UsersTable = ({ users, handleDelete, fetchUsers }: dataProps) => {
-    const [search, setSearch] = useState("");
+const UsersTable = ({ users, handleDelete, fetchUsers, setUsers }: dataProps) => {
+    // const [search, setSearch] = useState("");
     const navigate = useNavigate();
 
-    const filteredUsers = users.filter(
-        (usercheak) =>
-            usercheak.username.toLowerCase().includes(search.toLowerCase()) ||
-            usercheak.email.toLowerCase().includes(search.toLowerCase())
-    );
+    // console.log(users);
 
     const handleBlockToggle = async (user: User) => {
         try {
@@ -37,12 +33,16 @@ const UsersTable = ({ users, handleDelete, fetchUsers }: dataProps) => {
             dataIndex: "username",
             key: "username",
             render: (_, user) => <strong>{user.username}</strong>,
+            sorter: true,
+
+
         },
         {
             title: "Email",
             dataIndex: "email",
             key: "email",
             render: (_, user) => <a href="#">{user.email}</a>,
+            sorter: true,
         },
         {
             title: "Телефон",
@@ -101,16 +101,30 @@ const UsersTable = ({ users, handleDelete, fetchUsers }: dataProps) => {
                 <Space style={{ marginBottom: 16 }}>
                     <Input
                         placeholder="Поиск по имени или email"
-                        onChange={(e) => setSearch(e.target.value)}
+                        onChange={async (e) => {
+                            const response = await getUsers(undefined, undefined, e.target.value)
+                            setUsers(response.data.data)
+                        }}
                         style={{ width: 400 }}
                     />
-                    <Button style={{ width: 100 }}>Фильтр</Button>
+                    {/* <Button style={{ width: 100 }}>Фильтр</Button> */}
                 </Space>
                 <Table
                     columns={columns}
-                    dataSource={filteredUsers}
+                    dataSource={users}
                     rowKey="id"
-                    pagination={{ pageSize: 5 }}
+                    onChange={async (_, __, sorter) => {
+                        const order = Array.isArray(sorter) ? sorter[0]?.order : sorter.order;
+                        const key = Array.isArray(sorter) ? sorter[0]?.columnKey : sorter.columnKey;
+                        const response = await getUsers(SortOrder[order?.toUpperCase() as keyof typeof SortOrder], key as string);
+                        setUsers(response.data.data);
+                    }}
+                    rowSelection={{
+                        onChange: (selectedRowKeys, selectedRows) => {
+                            console.log(`selectedRowKeys: ${selectedRowKeys}`, "selectedRows: ", selectedRows);
+                        },
+                    }}
+                    pagination={{ pageSize: 20 }}
                 />
             </div>
         </div>

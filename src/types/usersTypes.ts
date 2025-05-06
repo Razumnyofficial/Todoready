@@ -5,6 +5,13 @@ export enum Roles {
     ADMIN = "ADMIN"
 }
 
+export enum SortOrder {
+    ASCEND = "asc",
+    DESCEND = "desc",
+    UNDEFINED = "none"
+
+}
+
 export interface User {
     id: number;
     username: string;
@@ -18,5 +25,6 @@ export interface User {
 export interface dataProps {
     users: User[];
     handleDelete: (id: number) => void;
-    fetchUsers: () => void
+    fetchUsers: () => void;
+    setUsers: (users: User[]) => void;
 }
