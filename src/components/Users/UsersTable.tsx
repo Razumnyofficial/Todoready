@@ -1,10 +1,10 @@
-import { Table, Tag, Button, Space, notification, Input } from "antd";
+import { Table, Tag, Button, Space, notification, Input, Select } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useNavigate } from "react-router-dom";
 import { blockUser, getUsers, unblockUser } from "@/api/users";
 import RoleManagement from "./RoleManagement";
 import { SortOrder, User, dataProps } from "@/types/usersTypes";
-// import { useState } from "react";
+
 
 const UsersTable = ({ users, handleDelete, fetchUsers, setUsers }: dataProps) => {
     // const [search, setSearch] = useState("");
@@ -73,6 +73,7 @@ const UsersTable = ({ users, handleDelete, fetchUsers, setUsers }: dataProps) =>
             title: "Блокировка",
             key: "isBlocked",
             render: (_, user) => (user.isBlocked ? "Да" : "-"),
+
         },
         {
             title: "Дата регистр.",
@@ -108,6 +109,21 @@ const UsersTable = ({ users, handleDelete, fetchUsers, setUsers }: dataProps) =>
                         style={{ width: 400 }}
                     />
                     {/* <Button style={{ width: 100 }}>Фильтр</Button> */}
+                    <Select
+                        // defaultValue={null}
+                        placeholder="Фильтр"
+                        style={{ width: 120 }}
+                        onChange={async (isBlocked: boolean | null) => {
+
+                            const response = await getUsers(undefined, undefined, undefined, isBlocked);
+                            setUsers(response.data.data);
+                        }}
+                        options={[
+                            { value: null, label: 'Все' },
+                            { value: true, label: 'Заблокированные' },
+                            { value: false, label: 'Разблокированные' },
+                        ]}
+                    />
                 </Space>
                 <Table
                     columns={columns}

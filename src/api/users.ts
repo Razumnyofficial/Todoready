@@ -1,8 +1,8 @@
 import apiUsers from "./apiUsers";
 import { Roles } from "@/types/usersTypes";
 
-export const getUsers = async (sortOrder?: string, sortBy?: string, search?: string) => {
-    const response = await apiUsers.get("/users", { params: { sortOrder, sortBy, search } });
+export const getUsers = async (sortOrder?: string, sortBy?: string, search?: string, isBlocked?: boolean | null) => {
+    const response = await apiUsers.get("/users", { params: { sortOrder, sortBy, search, isBlocked } });
     return response;
 };
 
