@@ -32,11 +32,11 @@ function SideMenuLayout() {
 
         if (!token && !refreshTokenValue) {
           console.log("Нет токенов");
-          navigate("/auth/login");
+          navigate("/");
         }
       } catch (error) {
         console.error("Ошибка Авторизации", error);
-        navigate("/auth/login");
+        navigate("/");
       }
     };
 

@@ -16,12 +16,18 @@ import UserProfile from "./components/Users/UserProfile";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/", element: <FullLogin />, children: [
+      { index: true, element: <PageLogin /> },
+      { path: "register", element: <PageRegister /> },
+    ]
+  },
+  {
+    path: "/page",
     element: <SideMenuLayout />,
     errorElement: <ErrorPage />,
     children: [
       {
-        index: true,
+        path: "tasks",
         element: (
           <PrivateRoute>
             <PageTodo />
@@ -29,26 +35,21 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/profile",
+        path: "profile",
         element: <ProfilePage />,
       },
       {
-        path: "/users",
+        path: "users",
         element: <Users />
       },
       {
-        path: "/users/:id",
+        path: "users/:id",
         element: <UserProfile />
       }
 
     ],
   },
-  {
-    path: "/auth", element: <FullLogin />, children: [
-      { path: "login", element: <PageLogin /> },
-      { path: "register", element: <PageRegister /> },
-    ]
-  },
+
 
 
 ]);

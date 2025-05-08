@@ -32,7 +32,7 @@ api.interceptors.response.use(
         // localStorage.removeItem("accessToken");
         // localStorage.removeItem("refreshToken");
         TokenStorage.removeTokens();
-        window.location.href = "/auth/login";
+        window.location.href = "/";
         return Promise.reject(refreshError);
       }
     }

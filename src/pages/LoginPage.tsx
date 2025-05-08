@@ -7,7 +7,7 @@ const PageLogin = () => {
     <>
       <LoginForm />
       <p className={styles.notregister}>
-        Not registered yet? <Link to="/auth/register">Create an account</Link>
+        Not registered yet? <Link to="/register">Create an account</Link>
       </p>
 
     </>

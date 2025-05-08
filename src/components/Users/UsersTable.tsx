@@ -102,7 +102,7 @@ const UsersTable = ({ users, handleDelete, fetchUsers, setUsers, searchQuery, se
                     <Button size="small" onClick={() => handleBlockToggle(user)} type={user.isBlocked ? "default" : "primary"}>
                         {user.isBlocked ? "Разблок" : "Блок"}
                     </Button>
-                    <Button size="small" onClick={() => navigate(`/users/${user.id}`)}>Профиль</Button>
+                    <Button size="small" onClick={() => navigate(`/page/users/${user.id}`)}>Профиль</Button>
                     <Button size="small" onClick={() => handleDelete(user.id)} style={{ background: "red", color: "white" }}>Удалить</Button>
                     <RoleManagement userId={user.id} currentRoles={user.roles} onSuccess={fetchUsers} />
                 </Space>

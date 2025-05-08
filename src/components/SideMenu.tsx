@@ -25,20 +25,20 @@ const SideMenu = () => {
 
   const menuItems = [
     {
-      key: "/",
+      key: "/tasks",
       label: (
-        <Link to="/" >
+        <Link to="/page/tasks" >
           Tasks
         </Link>
       ),
     },
     {
       key: "/profile",
-      label: <Link to="/profile">Profile</Link>,
+      label: <Link to="/page/profile">Profile</Link>,
     },
     ...(currentUser?.roles?.includes(Roles.ADMIN) ? [{
       key: "/users",
-      label: <Link to="/users">Users</Link>
+      label: <Link to="/page/users">Users</Link>
     }] : [])
   ];
 
