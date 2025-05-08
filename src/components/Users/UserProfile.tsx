@@ -95,7 +95,7 @@ const UserProfile = () => {
                             Сохранить
                         </Button>
                     )}
-                    <Button style={{ marginLeft: 8 }} onClick={() => navigate("/users")}>
+                    <Button style={{ marginLeft: 8 }} onClick={() => navigate("/page/users")}>
                         Назад
                     </Button>
                 </div>
