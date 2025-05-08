@@ -27,4 +27,6 @@ export interface dataProps {
     handleDelete: (id: number) => void;
     fetchUsers: () => void;
     setUsers: (users: User[]) => void;
+    searchQuery: string;
+    setSearchQuery: (query: string) => void;
 }

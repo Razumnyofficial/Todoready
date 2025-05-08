@@ -7,7 +7,7 @@ const PageRegister = () => {
     <>
       <RegisterForm />
       <p className={styles.notregister}>
-        Already have an account? <Link to="/auth/login">Login</Link>
+        Already have an account? <Link to="/">Login</Link>
       </p>
     </>
   );
