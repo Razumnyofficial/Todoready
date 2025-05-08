@@ -11,7 +11,7 @@ const PageUsers = () => {
     const fetchUsers = async () => {
         setLoading(true);
         try {
-            const response = await getUsers();
+            const response = await getUsers(undefined, undefined, undefined, undefined, 1000, 0);
             setUsers(response.data.data);
         } catch (e) {
             console.error(e);

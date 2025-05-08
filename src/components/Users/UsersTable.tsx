@@ -10,7 +10,7 @@ const UsersTable = ({ users, handleDelete, fetchUsers, setUsers }: dataProps) =>
     // const [search, setSearch] = useState("");
     const navigate = useNavigate();
 
-    // console.log(users);
+    console.log(users);
 
     const handleBlockToggle = async (user: User) => {
         try {
@@ -79,6 +79,16 @@ const UsersTable = ({ users, handleDelete, fetchUsers, setUsers }: dataProps) =>
             title: "Дата регистр.",
             dataIndex: "date",
             key: "date",
+            render: (_, user) => {
+                const formattedDate = new Date(user.date).toLocaleDateString('ru-RU', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                return formattedDate;
+            }
         },
         {
             title: "Действия",
@@ -103,19 +113,19 @@ const UsersTable = ({ users, handleDelete, fetchUsers, setUsers }: dataProps) =>
                     <Input
                         placeholder="Поиск по имени или email"
                         onChange={async (e) => {
-                            const response = await getUsers(undefined, undefined, e.target.value)
+                            const response = await getUsers(undefined, undefined, e.target.value, undefined, 1000, 0)
                             setUsers(response.data.data)
                         }}
                         style={{ width: 400 }}
                     />
-                    {/* <Button style={{ width: 100 }}>Фильтр</Button> */}
+
                     <Select
-                        // defaultValue={null}
+
                         placeholder="Фильтр"
                         style={{ width: 120 }}
                         onChange={async (isBlocked: boolean | null) => {
 
-                            const response = await getUsers(undefined, undefined, undefined, isBlocked);
+                            const response = await getUsers(undefined, undefined, undefined, isBlocked, 1000, 0);
                             setUsers(response.data.data);
                         }}
                         options={[
@@ -132,15 +142,10 @@ const UsersTable = ({ users, handleDelete, fetchUsers, setUsers }: dataProps) =>
                     onChange={async (_, __, sorter) => {
                         const order = Array.isArray(sorter) ? sorter[0]?.order : sorter.order;
                         const key = Array.isArray(sorter) ? sorter[0]?.columnKey : sorter.columnKey;
-                        const response = await getUsers(SortOrder[order?.toUpperCase() as keyof typeof SortOrder], key as string);
+                        const response = await getUsers(SortOrder[order?.toUpperCase() as keyof typeof SortOrder], key as string, undefined, undefined, 1000, 0);
                         setUsers(response.data.data);
                     }}
-                    rowSelection={{
-                        onChange: (selectedRowKeys, selectedRows) => {
-                            console.log(`selectedRowKeys: ${selectedRowKeys}`, "selectedRows: ", selectedRows);
-                        },
-                    }}
-                    pagination={{ pageSize: 20 }}
+
                 />
             </div>
         </div>
