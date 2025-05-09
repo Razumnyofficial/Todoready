@@ -6,7 +6,6 @@ import { User } from "@/types/usersTypes";
 
 const PageUsers = () => {
     const [users, setUsers] = useState<User[]>([]);
-
     const [searchQuery, setSearchQuery] = useState<string>('');
 
     const fetchUsers = async () => {
@@ -47,17 +46,6 @@ const PageUsers = () => {
     return (
         <div style={{ padding: "20px" }}>
             <h1>Пользователи</h1>
-            {/* {loading ? <h1>Загрузка...</h1> : (
-                <UsersTable
-                    users={users}
-                    handleDelete={handleDelete}
-                    fetchUsers={fetchUsers}
-                    setUsers={setUsers}
-                    searchQuery={searchQuery}
-                    setSearchQuery={setSearchQuery}
-                />
-            )} */}
-
             <UsersTable
                 users={users}
                 handleDelete={handleDelete}

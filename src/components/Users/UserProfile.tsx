@@ -7,7 +7,6 @@ import { User } from "@/types/authTypes";
 const UserProfile = () => {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
-
     const [profileUser, setProfileUser] = useState<User | null>(null);
     const [isEditing, setIsEditing] = useState(false);
     const [form] = Form.useForm();

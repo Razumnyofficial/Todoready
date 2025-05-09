@@ -1,15 +1,15 @@
 import { Table, Tag, Button, Space, notification, Input, Select } from "antd";
 import type { ColumnsType } from "antd/es/table";
-
+import { useState } from "react";
 import type { SorterResult } from 'antd/es/table/interface';
 import { useNavigate } from "react-router-dom";
 import { blockUser, getUsers, unblockUser } from "@/api/users";
 import RoleManagement from "./RoleManagement";
 import { SortOrder, User, dataProps } from "@/types/usersTypes";
 
-
 const UsersTable = ({ users, handleDelete, fetchUsers, setUsers, searchQuery, setSearchQuery }: dataProps) => {
     const navigate = useNavigate();
+    const [currentFilter, setCurrentFilter] = useState<boolean | null>(null);
 
     console.log(users);
 
@@ -28,7 +28,8 @@ const UsersTable = ({ users, handleDelete, fetchUsers, setUsers, searchQuery, se
                 await blockUser(user.id);
                 notification.success({ message: "Пользователь заблокирован" });
             }
-            await fetchUsers();
+            const response = await getUsers(undefined, undefined, searchQuery, currentFilter, 1000, 0);
+            setUsers(response.data.data);
         } catch (error) {
             notification.error({ message: "Ошибка при обновлении блокировки" });
         }
@@ -123,13 +124,15 @@ const UsersTable = ({ users, handleDelete, fetchUsers, setUsers, searchQuery, se
                     <Select
                         placeholder="Фильтр"
                         style={{ width: 120 }}
+                        value={currentFilter}
                         options={[
                             { value: null, label: 'Все' },
                             { value: true, label: 'Заблокированные' },
                             { value: false, label: 'Разблокированные' },
                         ]}
                         onChange={async (value) => {
-                            const response = await getUsers(undefined, undefined, undefined, value, 1000, 0);
+                            setCurrentFilter(value);
+                            const response = await getUsers(undefined, undefined, searchQuery, value, 1000, 0);
                             setUsers(response.data.data);
                         }}
                     />
@@ -149,7 +152,7 @@ const UsersTable = ({ users, handleDelete, fetchUsers, setUsers, searchQuery, se
                             SortOrder[order?.toUpperCase() as keyof typeof SortOrder],
                             key as string,
                             searchQuery,
-                            undefined,
+                            currentFilter,
                             1000,
                             0
                         );
