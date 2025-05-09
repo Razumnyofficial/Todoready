@@ -80,49 +80,50 @@ const Task = ({ fetchData, item }: { fetchData: () => void; item: Todo }) => {
 
         <div className="icons_btn">
           {!isEdit ? (
-            Показываем кнопку редактирования только если задача не редактируется
 
-          <Button
-            icon={<EditOutlined />}
-            style={{
-              backgroundColor: "#0093DC",
-              color: "#fff",
-              width: "32px",
-              height: "32px",
-              fontSize: "18px",
-              margin: "5px",
-            }}
-            type="primary"
-            onClick={() => handleEditClick(item)}
-          ></Button>
+
+            <Button
+              icon={<EditOutlined />}
+              style={{
+                backgroundColor: "#0093DC",
+                color: "#fff",
+                width: "32px",
+                height: "32px",
+                fontSize: "18px",
+                margin: "5px",
+              }}
+              type="primary"
+              onClick={() => handleEditClick(item)}
+            ></Button>
           ) : (
-          <>
-            <Button
-              style={{
-                backgroundColor: "#0093DC",
-                color: "#fff",
-                width: "32px",
-                height: "32px",
-                fontSize: "18px",
-                margin: "5px",
-              }}
-              icon={<SaveOutlined />}
-              onClick={handleSaveEdit}
-            ></Button>
+            // Показываем кнопки "Сохранить" и "Отмена", если задача редактируется
+            <>
+              <Button
+                style={{
+                  backgroundColor: "#0093DC",
+                  color: "#fff",
+                  width: "32px",
+                  height: "32px",
+                  fontSize: "18px",
+                  margin: "5px",
+                }}
+                icon={<SaveOutlined />}
+                onClick={handleSaveEdit}
+              ></Button>
 
-            <Button
-              style={{
-                backgroundColor: "#0093DC",
-                color: "#fff",
-                width: "32px",
-                height: "32px",
-                fontSize: "18px",
-                margin: "5px",
-              }}
-              icon={<CloseCircleOutlined />}
-              onClick={() => setIsEdit(false)}
-            ></Button>
-          </>
+              <Button
+                style={{
+                  backgroundColor: "#0093DC",
+                  color: "#fff",
+                  width: "32px",
+                  height: "32px",
+                  fontSize: "18px",
+                  margin: "5px",
+                }}
+                icon={<CloseCircleOutlined />}
+                onClick={() => setIsEdit(false)}
+              ></Button>
+            </>
           )}
           {/* Кнопка удаления остается всегда */}
 
