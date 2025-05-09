@@ -42,10 +42,29 @@ const UserProfile = () => {
 
     const onSave = async () => {
         try {
-            const values = await form.validateFields();
+            const values = form.getFieldsValue();
             const numericId = Number(id);
 
-            await updateUser(numericId, values);
+           
+            const updatedFields: Partial<User> = {};
+
+            if (values.username !== profileUser?.username) {
+                updatedFields.username = values.username;
+            }
+            if (values.email !== profileUser?.email) {
+                updatedFields.email = values.email;
+            }
+            if (values.phoneNumber !== profileUser?.phoneNumber) {
+                updatedFields.phoneNumber = values.phoneNumber;
+            }
+
+            
+            if (Object.keys(updatedFields).length === 0) {
+                setIsEditing(false);
+                return;
+            }
+
+            await updateUser(numericId, updatedFields);
             const updated = await getUser(numericId);
             setProfileUser(updated);
 
@@ -67,7 +86,6 @@ const UserProfile = () => {
     if (!profileUser) return <div>Загрузка...</div>;
 
     return (
-
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <div style={{ maxWidth: 600, }} >
                 <h2>Профиль пользователя</h2>
