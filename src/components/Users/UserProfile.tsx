@@ -45,7 +45,7 @@ const UserProfile = () => {
             const values = form.getFieldsValue();
             const numericId = Number(id);
 
-           
+
             const updatedFields: Partial<User> = {};
 
             if (values.username !== profileUser?.username) {
@@ -58,7 +58,7 @@ const UserProfile = () => {
                 updatedFields.phoneNumber = values.phoneNumber;
             }
 
-            
+
             if (Object.keys(updatedFields).length === 0) {
                 setIsEditing(false);
                 return;

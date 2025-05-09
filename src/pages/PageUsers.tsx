@@ -7,15 +7,15 @@ import { User } from "@/types/usersTypes";
 const PageUsers = () => {
     const [users, setUsers] = useState<User[]>([]);
     const [searchQuery, setSearchQuery] = useState<string>('');
+    const [currentFilter, setCurrentFilter] = useState<boolean | null>(null);
 
-    const fetchUsers = async () => {
-
+    const fetchUsers = async (filter: boolean | null = currentFilter) => {
         try {
             const response = await getUsers(
                 undefined,
                 undefined,
                 searchQuery,
-                undefined,
+                filter,
                 1000,
                 0
             );
@@ -37,7 +37,7 @@ const PageUsers = () => {
         try {
             await deleteUser(id);
             notification.success({ message: "Пользователь удалён" });
-            await fetchUsers();
+            await fetchUsers(currentFilter);
         } catch (error) {
             notification.error({ message: "Ошибка при удалении пользователя" });
         }
@@ -53,8 +53,9 @@ const PageUsers = () => {
                 setUsers={setUsers}
                 searchQuery={searchQuery}
                 setSearchQuery={setSearchQuery}
+                currentFilter={currentFilter}
+                setCurrentFilter={setCurrentFilter}
             />
-
         </div>
     );
 };

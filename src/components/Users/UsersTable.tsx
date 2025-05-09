@@ -1,17 +1,13 @@
 import { Table, Tag, Button, Space, notification, Input, Select } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { useState } from "react";
 import type { SorterResult } from 'antd/es/table/interface';
 import { useNavigate } from "react-router-dom";
 import { blockUser, getUsers, unblockUser } from "@/api/users";
 import RoleManagement from "./RoleManagement";
 import { SortOrder, User, dataProps } from "@/types/usersTypes";
 
-const UsersTable = ({ users, handleDelete, fetchUsers, setUsers, searchQuery, setSearchQuery }: dataProps) => {
+const UsersTable = ({ users, handleDelete, fetchUsers, setUsers, searchQuery, setSearchQuery, currentFilter, setCurrentFilter }: dataProps) => {
     const navigate = useNavigate();
-    const [currentFilter, setCurrentFilter] = useState<boolean | null>(null);
-
-    console.log(users);
 
     const handleBlockToggle = async (user: User) => {
         const confirmAction = window.confirm(
@@ -28,8 +24,7 @@ const UsersTable = ({ users, handleDelete, fetchUsers, setUsers, searchQuery, se
                 await blockUser(user.id);
                 notification.success({ message: "Пользователь заблокирован" });
             }
-            const response = await getUsers(undefined, undefined, searchQuery, currentFilter, 1000, 0);
-            setUsers(response.data.data);
+            await fetchUsers(currentFilter);
         } catch (error) {
             notification.error({ message: "Ошибка при обновлении блокировки" });
         }

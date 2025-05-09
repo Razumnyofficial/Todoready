@@ -25,8 +25,10 @@ export interface User {
 export interface dataProps {
     users: User[];
     handleDelete: (id: number) => void;
-    fetchUsers: () => void;
+    fetchUsers: (filter?: boolean | null) => void;
     setUsers: (users: User[]) => void;
     searchQuery: string;
     setSearchQuery: (query: string) => void;
+    currentFilter: boolean | null;
+    setCurrentFilter: (filter: boolean | null) => void;
 }
