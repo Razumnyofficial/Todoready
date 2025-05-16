@@ -1,9 +1,9 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import PageTodo from "@/pages/TodoPage";
-
 import ErrorPage from "@/pages/ErrorPage";
 import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
+import AdminRoute from "@/components/AdminRoute/AdminRoute";
 import "./App.css";
 import FullLogin from "@/components/FullLogin/FullLogin";
 
@@ -36,22 +36,30 @@ const router = createBrowserRouter([
       },
       {
         path: "profile",
-        element: <ProfilePage />,
+        element: (
+          <PrivateRoute>
+            <ProfilePage />
+          </PrivateRoute>
+        ),
       },
       {
         path: "users",
-        element: <Users />
+        element: (
+          <AdminRoute>
+            <Users />
+          </AdminRoute>
+        ),
       },
       {
         path: "users/:id",
-        element: <UserProfile />
+        element: (
+          <AdminRoute>
+            <UserProfile />
+          </AdminRoute>
+        ),
       }
-
     ],
   },
-
-
-
 ]);
 
 function App() {
