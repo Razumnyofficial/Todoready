@@ -27,7 +27,7 @@ const RegisterForm = () => {
         });
         form.resetFields();
         setIsRegister(true);
-        // navigate("/login");
+        
       }
     } catch (error) {
       console.log("Ошибка регестрации", error);
@@ -190,7 +190,7 @@ const RegisterForm = () => {
           <h2>Регистрация прошла успешно!</h2>
 
           <Link
-            to="/auth/login"
+            to="/"
             style={{
               display: "flex",
               textAlign: "center",

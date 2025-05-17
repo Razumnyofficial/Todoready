@@ -12,7 +12,7 @@ const LoginForm = () => {
       const data = await postSignIn(values.login, values.password);
       TokenStorage.saveTokens(data.accessToken, data.refreshToken);
       notification.success({ message: "Вход выполнен успешно" });
-      navigate("/");
+      navigate("/page/tasks");
     } catch (error) {
       console.log(error);
       notification.error({

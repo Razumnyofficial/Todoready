@@ -1,10 +1,9 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import PageTodo from "@/pages/TodoPage";
-
 import ErrorPage from "@/pages/ErrorPage";
-// import RootLayout from "./pages/RootLayout";
 import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
+import AdminRoute from "@/components/AdminRoute/AdminRoute";
 import "./App.css";
 import FullLogin from "@/components/FullLogin/FullLogin";
 
@@ -12,15 +11,23 @@ import PageLogin from "@/pages/LoginPage";
 import PageRegister from "@/pages/RegisterPage";
 import ProfilePage from "@/pages/ProfilePage";
 import SideMenuLayout from "@/layouts/SideMenuLayout";
+import Users from "./pages/PageUsers";
+import UserProfile from "./components/Users/UserProfile";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/", element: <FullLogin />, children: [
+      { index: true, element: <PageLogin /> },
+      { path: "register", element: <PageRegister /> },
+    ]
+  },
+  {
+    path: "/page",
     element: <SideMenuLayout />,
     errorElement: <ErrorPage />,
     children: [
       {
-        index: true,
+        path: "tasks",
         element: (
           <PrivateRoute>
             <PageTodo />
@@ -28,20 +35,31 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/profile",
-        element: <ProfilePage />,
+        path: "profile",
+        element: (
+          <PrivateRoute>
+            <ProfilePage />
+          </PrivateRoute>
+        ),
       },
-
+      {
+        path: "users",
+        element: (
+          <AdminRoute>
+            <Users />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "users/:id",
+        element: (
+          <AdminRoute>
+            <UserProfile />
+          </AdminRoute>
+        ),
+      }
     ],
   },
-  {
-    path: "/auth", element: <FullLogin />, children: [
-      { path: "login", element: <PageLogin /> },
-      { path: "register", element: <PageRegister /> },
-    ]
-  },
-
-
 ]);
 
 function App() {

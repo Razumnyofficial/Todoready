@@ -64,7 +64,6 @@ const Task = ({ fetchData, item }: { fetchData: () => void; item: Todo }) => {
         />
 
         {isEdit ? (
-          // Когда задача в режиме редактирования
           <div className="edit-form">
             <Input
               style={{ width: "400px", marginRight: "20px" }}
@@ -74,7 +73,6 @@ const Task = ({ fetchData, item }: { fetchData: () => void; item: Todo }) => {
             />
           </div>
         ) : (
-          // Когда задача не редактируется
           <span className={`info_items ${item.isDone ? "isDone" : ""}`}>
             {item.title}
           </span>
@@ -82,7 +80,7 @@ const Task = ({ fetchData, item }: { fetchData: () => void; item: Todo }) => {
 
         <div className="icons_btn">
           {!isEdit ? (
-            // Показываем кнопку редактирования только если задача не редактируется
+
 
             <Button
               icon={<EditOutlined />}

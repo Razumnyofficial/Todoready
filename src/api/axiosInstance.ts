@@ -1,13 +1,12 @@
 import axios from "axios";
-import  TokenStorage  from "../utils/TokenStorage";
 import { refreshToken } from "./auth";
+import TokenStorage from "@/utils/TokenStorage";
 
-const api = axios.create({
+const axiosInstance = axios.create({
   baseURL: "https://easydev.club/api/v1",
 });
 
-api.interceptors.request.use((config) => {
-  // const accessToken = localStorage.getItem("accessToken");
+axiosInstance.interceptors.request.use((config) => {
   const accessToken = TokenStorage.getAccessToken();
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
@@ -15,24 +14,26 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-api.interceptors.response.use(
+axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response?.status === 401 && !originalRequest._retry && originalRequest.url !== "/auth/signin") {
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      originalRequest.url !== "/auth/signin"
+    ) {
       originalRequest._retry = true;
 
       try {
         const newAccessToken = await refreshToken();
 
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-        return api(originalRequest);
+        return axiosInstance(originalRequest);
       } catch (refreshError) {
-        // localStorage.removeItem("accessToken");
-        // localStorage.removeItem("refreshToken");
         TokenStorage.removeTokens();
-        window.location.href = "/login";
+        window.location.href = "/";
         return Promise.reject(refreshError);
       }
     }
@@ -41,4 +42,4 @@ api.interceptors.response.use(
   }
 );
 
-export default api;
+export default axiosInstance;

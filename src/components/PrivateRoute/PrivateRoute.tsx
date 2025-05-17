@@ -25,7 +25,7 @@ const PrivateRoute = ({ children }: Props) => {
           setIsAuthenticated(true);
           return;
         } catch (error) {
-
+          console.log(error)
           if (refreshTokenValue) {
             try {
               const newToken = await refreshToken();
@@ -34,6 +34,7 @@ const PrivateRoute = ({ children }: Props) => {
                 return;
               }
             } catch (refreshError) {
+              console.log(refreshError)
               setIsAuthenticated(false);
               return;
             }
@@ -50,6 +51,7 @@ const PrivateRoute = ({ children }: Props) => {
             return;
           }
         } catch (error) {
+          console.log(error)
           setIsAuthenticated(false);
           return;
         }
@@ -63,7 +65,7 @@ const PrivateRoute = ({ children }: Props) => {
   if (isAuthenticated === null) {
     return null
   }
-  return isAuthenticated ? <>{children}</> : <Navigate to="/auth/login" />;
+  return isAuthenticated ? <>{children}</> : <Navigate to="/page" />;
 };
 
 export default PrivateRoute;
