@@ -28,7 +28,7 @@ const PageUsers = () => {
 
     useEffect(() => {
         fetchUsers();
-    }, [searchQuery]);
+    }, []);
 
     const handleDelete = async (id: number) => {
         const confirmDelete = window.confirm("Вы уверены, что хотите удалить пользователя?");

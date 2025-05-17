@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { blockUser, getUsers, unblockUser } from "@/api/users";
 import RoleManagement from "./RoleManagement";
 import { SortOrder, User, dataProps, Roles } from "@/types/usersTypes";
+import debounce from 'lodash.debounce';
+import { useCallback } from 'react';
 
 
 const ROLE_COLORS: Record<Roles, string> = {
@@ -16,6 +18,20 @@ const ROLE_COLORS: Record<Roles, string> = {
 
 const UsersTable = ({ users, handleDelete, fetchUsers, setUsers, searchQuery, setSearchQuery, currentFilter, setCurrentFilter }: dataProps) => {
     const navigate = useNavigate();
+
+    const debouncedSearch = useCallback(
+        debounce(async (searchValue: string) => {
+            const response = await getUsers(undefined, undefined, searchValue, currentFilter, 1000, 0);
+            setUsers(response.data.data);
+        }, 500),
+        [currentFilter]
+    );
+
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setSearchQuery(value);
+        debouncedSearch(value);
+    };
 
     const handleBlockToggle = async (user: User) => {
         const confirmAction = window.confirm(
@@ -114,7 +130,7 @@ const UsersTable = ({ users, handleDelete, fetchUsers, setUsers, searchQuery, se
                     <Input
                         placeholder="Поиск по имени или email"
                         value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onChange={handleSearchChange}
                         style={{ width: 400 }}
                     />
                     <Select
