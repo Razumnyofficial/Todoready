@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Modal } from 'antd';
 import { updateUserRoles } from '@/api/users';
 import { Roles } from '@/types/usersTypes';
 import styles from './RoleManagement.module.css';
@@ -28,42 +29,56 @@ const RoleManagement = ({ userId, currentRoles, onSuccess }: RoleManagementProps
     };
 
     const handleRemoveRole = async (roleToRemove: Roles) => {
-        if (!window.confirm(`Вы уверены, что хотите удалить роль ${roleToRemove}?`)) {
-            return;
-        }
-
-        setLoading(true);
-        try {
-            const updatedRoles = currentRoles.filter(role => role !== roleToRemove);
-            await updateUserRoles(userId, updatedRoles);
-            onSuccess();
-        } catch (error) {
-            console.error('Ошибка при удалении роли:', error);
-            alert('Произошла ошибка при удалении роли');
-        } finally {
-            setLoading(false);
-        }
+        Modal.confirm({
+            title: 'Подтверждение',
+            content: `Вы уверены, что хотите удалить роль ${roleToRemove}?`,
+            okText: 'Да',
+            cancelText: 'Нет',
+            onOk: async () => {
+                setLoading(true);
+                try {
+                    const updatedRoles = currentRoles.filter(role => role !== roleToRemove);
+                    await updateUserRoles(userId, updatedRoles);
+                    onSuccess();
+                } catch (error) {
+                    console.error('Ошибка при удалении роли:', error);
+                    Modal.error({
+                        title: 'Ошибка',
+                        content: 'Произошла ошибка при удалении роли'
+                    });
+                } finally {
+                    setLoading(false);
+                }
+            }
+        });
     };
 
     const handleAddRole = async () => {
         if (!selectedRole) return;
 
-        if (!window.confirm(`Вы уверены, что хотите добавить роль ${selectedRole}?`)) {
-            return;
-        }
-
-        setLoading(true);
-        try {
-            const updatedRoles = [...currentRoles, selectedRole];
-            await updateUserRoles(userId, updatedRoles);
-            onSuccess();
-            setSelectedRole(null);
-        } catch (error) {
-            console.error('Ошибка при добавлении роли:', error);
-            alert('Произошла ошибка при добавлении роли');
-        } finally {
-            setLoading(false);
-        }
+        Modal.confirm({
+            title: 'Подтверждение',
+            content: `Вы уверены, что хотите добавить роль ${selectedRole}?`,
+            okText: 'Да',
+            cancelText: 'Нет',
+            onOk: async () => {
+                setLoading(true);
+                try {
+                    const updatedRoles = [...currentRoles, selectedRole];
+                    await updateUserRoles(userId, updatedRoles);
+                    onSuccess();
+                    setSelectedRole(null);
+                } catch (error) {
+                    console.error('Ошибка при добавлении роли:', error);
+                    Modal.error({
+                        title: 'Ошибка',
+                        content: 'Произошла ошибка при добавлении роли'
+                    });
+                } finally {
+                    setLoading(false);
+                }
+            }
+        });
     };
 
     return (
@@ -89,7 +104,7 @@ const RoleManagement = ({ userId, currentRoles, onSuccess }: RoleManagementProps
                                     {currentRoles.map(role => (
                                         <div key={role} className={styles.roleItem}>
                                             {role}
-                                            <button 
+                                            <button
                                                 className={styles.removeRoleButton}
                                                 onClick={() => handleRemoveRole(role)}
                                                 disabled={loading}
@@ -103,7 +118,7 @@ const RoleManagement = ({ userId, currentRoles, onSuccess }: RoleManagementProps
 
                             <div className={styles.addRole}>
                                 <h3>Добавить роль:</h3>
-                                <select 
+                                <select
                                     value={selectedRole || ''}
                                     onChange={handleRoleChange}
                                     className={styles.roleSelect}
@@ -118,7 +133,7 @@ const RoleManagement = ({ userId, currentRoles, onSuccess }: RoleManagementProps
                                         )
                                     ))}
                                 </select>
-                                <button 
+                                <button
                                     className={styles.addRoleButton}
                                     onClick={handleAddRole}
                                     disabled={!selectedRole || loading}

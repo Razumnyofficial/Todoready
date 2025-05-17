@@ -44,7 +44,7 @@ export const unblockUser = async (id: number) => {
 };
 
 export const updateUserRoles = async (userId: number, roles: Roles[]) => {
-  const response = await axiosInstance.put(`/admin/users/${userId}/rights`, {
+  const response = await axiosInstance.post(`/admin/users/${userId}/rights`, {
     roles,
   });
   return response.data;
