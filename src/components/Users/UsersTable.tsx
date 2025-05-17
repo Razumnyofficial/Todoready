@@ -66,6 +66,28 @@ const UsersTable = ({ users, handleDelete, fetchUsers, setUsers, searchQuery, se
         });
     };
 
+    const handleRowSelection = (selectedRowKeys: React.Key[], selectedRows: User[]) => {
+        console.log(`selectedRowKeys: ${selectedRowKeys}`, "selectedRows: ", selectedRows);
+    };
+
+    const handleTableChange = async (
+        _: any,
+        __: any,
+        sorter: SorterResult<User> | SorterResult<User>[]
+    ) => {
+        const order = Array.isArray(sorter) ? sorter[0]?.order : sorter.order;
+        const key = Array.isArray(sorter) ? sorter[0]?.columnKey : sorter.columnKey;
+        const response = await getUsers(
+            SortOrder[order?.toUpperCase() as keyof typeof SortOrder],
+            key as string,
+            searchQuery,
+            currentFilter,
+            1000,
+            0
+        );
+        setUsers(response.data.data);
+    };
+
     const columns: ColumnsType<User> = [
         {
             title: "Имя",
@@ -137,58 +159,38 @@ const UsersTable = ({ users, handleDelete, fetchUsers, setUsers, searchQuery, se
 
     return (
         <div>
-            <div>
-                <Space style={{ marginBottom: 16 }}>
-                    <Input
-                        placeholder="Поиск по имени или email"
-                        value={searchQuery}
-                        onChange={handleSearchChange}
-                        style={{ width: 400 }}
-                    />
-                    <Select
-                        placeholder="Фильтр"
-                        style={{ width: 120 }}
-                        value={currentFilter}
-                        options={[
-                            { value: null, label: 'Все' },
-                            { value: true, label: 'Заблокированные' },
-                            { value: false, label: 'Разблокированные' },
-                        ]}
-                        onChange={async (value) => {
-                            setCurrentFilter(value);
-                            const response = await getUsers(undefined, undefined, searchQuery, value, 1000, 0);
-                            setUsers(response.data.data);
-                        }}
-                    />
-                </Space>
-                <Table
-                    columns={columns}
-                    dataSource={users}
-                    rowKey="id"
-                    onChange={async (
-                        _,
-                        __,
-                        sorter: SorterResult<User> | SorterResult<User>[]
-                    ) => {
-                        const order = Array.isArray(sorter) ? sorter[0]?.order : sorter.order;
-                        const key = Array.isArray(sorter) ? sorter[0]?.columnKey : sorter.columnKey;
-                        const response = await getUsers(
-                            SortOrder[order?.toUpperCase() as keyof typeof SortOrder],
-                            key as string,
-                            searchQuery,
-                            currentFilter,
-                            1000,
-                            0
-                        );
+            <Space style={{ marginBottom: 16 }}>
+                <Input
+                    placeholder="Поиск по имени или email"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    style={{ width: 400 }}
+                />
+                <Select
+                    placeholder="Фильтр"
+                    style={{ width: 120 }}
+                    value={currentFilter}
+                    options={[
+                        { value: null, label: 'Все' },
+                        { value: true, label: 'Заблокированные' },
+                        { value: false, label: 'Разблокированные' },
+                    ]}
+                    onChange={async (value) => {
+                        setCurrentFilter(value);
+                        const response = await getUsers(undefined, undefined, searchQuery, value, 1000, 0);
                         setUsers(response.data.data);
                     }}
-                    rowSelection={{
-                        onChange: (selectedRowKeys, selectedRows) => {
-                            console.log(`selectedRowKeys: ${selectedRowKeys}`, "selectedRows: ", selectedRows);
-                        },
-                    }}
                 />
-            </div>
+            </Space>
+            <Table
+                columns={columns}
+                dataSource={users}
+                rowKey="id"
+                onChange={handleTableChange}
+                rowSelection={{
+                    onChange: handleRowSelection
+                }}
+            />
         </div>
     );
 };
