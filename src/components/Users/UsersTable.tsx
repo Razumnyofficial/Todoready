@@ -43,6 +43,12 @@ const UsersTable = ({ users, handleDelete, fetchUsers, setUsers, searchQuery, se
         debouncedSearch(value);
     };
 
+    const handleFilterChange = async (value: boolean | null) => {
+        setCurrentFilter(value);
+        const response = await getUsers(undefined, undefined, searchQuery, value, 1000, 0);
+        setUsers(response.data.data);
+    };
+
     const handleBlockToggle = async (user: User) => {
         Modal.confirm({
             title: 'Подтверждение действия',
@@ -175,11 +181,7 @@ const UsersTable = ({ users, handleDelete, fetchUsers, setUsers, searchQuery, se
                         { value: true, label: 'Заблокированные' },
                         { value: false, label: 'Разблокированные' },
                     ]}
-                    onChange={async (value) => {
-                        setCurrentFilter(value);
-                        const response = await getUsers(undefined, undefined, searchQuery, value, 1000, 0);
-                        setUsers(response.data.data);
-                    }}
+                    onChange={handleFilterChange}
                 />
             </Space>
             <Table
