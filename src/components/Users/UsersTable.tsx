@@ -4,7 +4,15 @@ import type { SorterResult } from 'antd/es/table/interface';
 import { useNavigate } from "react-router-dom";
 import { blockUser, getUsers, unblockUser } from "@/api/users";
 import RoleManagement from "./RoleManagement";
-import { SortOrder, User, dataProps } from "@/types/usersTypes";
+import { SortOrder, User, dataProps, Roles } from "@/types/usersTypes";
+
+
+const ROLE_COLORS: Record<Roles, string> = {
+    [Roles.ADMIN]: 'red',
+    [Roles.MODERATOR]: 'purple',
+    [Roles.HUILA]: 'yellow',
+    [Roles.USER]: 'green'
+};
 
 const UsersTable = ({ users, handleDelete, fetchUsers, setUsers, searchQuery, setSearchQuery, currentFilter, setCurrentFilter }: dataProps) => {
     const navigate = useNavigate();
@@ -55,18 +63,11 @@ const UsersTable = ({ users, handleDelete, fetchUsers, setUsers, searchQuery, se
             key: "roles",
             render: (_, user) => (
                 <>
-                    {(user.roles ?? []).map((role) => {
-                        let color = "blue";
-                        if (role === "ADMIN") color = "red";
-                        else if (role === "MODERATOR") color = "purple";
-                        else if (role === "HUILA") color = "yellow";
-                        else if (role === "USER") color = "green";
-                        return (
-                            <Tag key={role} color={color}>
-                                {role}
-                            </Tag>
-                        );
-                    })}
+                    {user.roles.map(role => (
+                        <Tag key={role} color={ROLE_COLORS[role]}>
+                            {role}
+                        </Tag>
+                    ))}
                 </>
             ),
         },

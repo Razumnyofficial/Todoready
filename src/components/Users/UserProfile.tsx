@@ -11,61 +11,32 @@ const UserProfile = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [form] = Form.useForm();
 
-    useEffect(() => {
-        if (!id) return;
+    const handleNavigateToUsers = () => {
+        navigate("/page/users");
+    };
 
-        const numericId = Number(id);
-        if (isNaN(numericId)) {
+    const handleStartEditing = () => {
+        setIsEditing(true);
+    };
+
+    const handleFetchUser = async (userId: number) => {
+        try {
+            const data = await getUser(userId);
+            setProfileUser(data);
+            form.setFieldsValue(data);
+        } catch (error) {
+            console.error(error);
             notification.error({
                 message: "Ошибка",
-                description: "Некорректный ID пользователя",
+                description: "Не удалось загрузить данные пользователя",
             });
-            return;
         }
+    };
 
-        const fetchUser = async () => {
-            try {
-                const data = await getUser(numericId);
-                setProfileUser(data);
-                form.setFieldsValue(data);
-            } catch (error) {
-                console.error(error);
-                notification.error({
-                    message: "Ошибка",
-                    description: "Не удалось загрузить данные пользователя",
-                });
-            }
-        };
-
-        fetchUser();
-    }, [id, form]);
-
-    const onSave = async () => {
+    const handleUpdateUser = async (userId: number, updatedFields: Partial<User>) => {
         try {
-            const values = form.getFieldsValue();
-            const numericId = Number(id);
-
-
-            const updatedFields: Partial<User> = {};
-
-            if (values.username !== profileUser?.username) {
-                updatedFields.username = values.username;
-            }
-            if (values.email !== profileUser?.email) {
-                updatedFields.email = values.email;
-            }
-            if (values.phoneNumber !== profileUser?.phoneNumber) {
-                updatedFields.phoneNumber = values.phoneNumber;
-            }
-
-
-            if (Object.keys(updatedFields).length === 0) {
-                setIsEditing(false);
-                return;
-            }
-
-            await updateUser(numericId, updatedFields);
-            const updated = await getUser(numericId);
+            await updateUser(userId, updatedFields);
+            const updated = await getUser(userId);
             setProfileUser(updated);
 
             notification.success({
@@ -82,6 +53,48 @@ const UserProfile = () => {
             });
         }
     };
+
+    const handleSave = async () => {
+        try {
+            const values = form.getFieldsValue() as Pick<User, 'username' | 'email' | 'phoneNumber'>;
+            const numericId = Number(id);
+
+            const updatedFields = (Object.keys(values) as Array<keyof typeof values>).reduce((acc, key) => {
+                if (values[key] !== profileUser?.[key]) {
+                    acc[key] = values[key];
+                }
+                return acc;
+            }, {} as Partial<User>);
+
+            if (Object.keys(updatedFields).length === 0) {
+                setIsEditing(false);
+                return;
+            }
+
+            await handleUpdateUser(numericId, updatedFields);
+        } catch (error) {
+            console.error(error);
+            notification.error({
+                message: "Ошибка",
+                description: "Не удалось обновить пользователя",
+            });
+        }
+    };
+
+    useEffect(() => {
+        if (!id) return;
+
+        const numericId = Number(id);
+        if (isNaN(numericId)) {
+            notification.error({
+                message: "Ошибка",
+                description: "Некорректный ID пользователя",
+            });
+            return;
+        }
+
+        handleFetchUser(numericId);
+    }, [id, form]);
 
     if (!profileUser) return <div>Загрузка...</div>;
 
@@ -104,15 +117,15 @@ const UserProfile = () => {
 
                 <div style={{ marginLeft: 40 }}>
                     {!isEditing ? (
-                        <Button type="primary" onClick={() => setIsEditing(true)}>
+                        <Button type="primary" onClick={handleStartEditing}>
                             Редактировать
                         </Button>
                     ) : (
-                        <Button type="primary" onClick={onSave}>
+                        <Button type="primary" onClick={handleSave}>
                             Сохранить
                         </Button>
                     )}
-                    <Button style={{ marginLeft: 8 }} onClick={() => navigate("/page/users")}>
+                    <Button style={{ marginLeft: 8 }} onClick={handleNavigateToUsers}>
                         Назад
                     </Button>
                 </div>
