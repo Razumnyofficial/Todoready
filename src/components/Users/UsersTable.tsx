@@ -1,13 +1,23 @@
-import { Table, Tag, Button, Space, notification, Input, Select } from "antd";
+import { Table, Tag, Button, Space, notification, Input, Select, Modal } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import type { SorterResult } from 'antd/es/table/interface';
 import { useNavigate } from "react-router-dom";
 import { blockUser, getUsers, unblockUser } from "@/api/users";
 import RoleManagement from "./RoleManagement";
-import { SortOrder, User, dataProps, Roles } from "@/types/usersTypes";
+import { SortOrder, User, Roles } from "@/types/usersTypes";
 import debounce from 'lodash.debounce';
 import { useCallback } from 'react';
 
+interface dataProps {
+    users: User[];
+    handleDelete: (id: number) => void;
+    fetchUsers: (filter?: boolean | null) => void;
+    setUsers: (users: User[]) => void;
+    searchQuery: string;
+    setSearchQuery: (query: string) => void;
+    currentFilter: boolean | null;
+    setCurrentFilter: (filter: boolean | null) => void;
+}
 
 const ROLE_COLORS: Record<Roles, string> = {
     [Roles.ADMIN]: 'red',
@@ -34,24 +44,26 @@ const UsersTable = ({ users, handleDelete, fetchUsers, setUsers, searchQuery, se
     };
 
     const handleBlockToggle = async (user: User) => {
-        const confirmAction = window.confirm(
-            `Вы уверены, что хотите ${user.isBlocked ? 'разблокировать' : 'заблокировать'} пользователя ${user.username}?`
-        );
-
-        if (!confirmAction) return;
-
-        try {
-            if (user.isBlocked) {
-                await unblockUser(user.id);
-                notification.success({ message: "Пользователь разблокирован" });
-            } else {
-                await blockUser(user.id);
-                notification.success({ message: "Пользователь заблокирован" });
+        Modal.confirm({
+            title: 'Подтверждение действия',
+            content: `Вы уверены, что хотите ${user.isBlocked ? 'разблокировать' : 'заблокировать'} пользователя ${user.username}?`,
+            okText: 'Да',
+            cancelText: 'Отмена',
+            onOk: async () => {
+                try {
+                    if (user.isBlocked) {
+                        await unblockUser(user.id);
+                        notification.success({ message: "Пользователь разблокирован" });
+                    } else {
+                        await blockUser(user.id);
+                        notification.success({ message: "Пользователь заблокирован" });
+                    }
+                    await fetchUsers(currentFilter);
+                } catch (error) {
+                    notification.error({ message: "Ошибка при обновлении блокировки" });
+                }
             }
-            await fetchUsers(currentFilter);
-        } catch (error) {
-            notification.error({ message: "Ошибка при обновлении блокировки" });
-        }
+        });
     };
 
     const columns: ColumnsType<User> = [
