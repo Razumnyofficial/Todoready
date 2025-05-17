@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { Modal } from 'antd';
+import { Modal, Button, Select, Space, Tag } from 'antd';
 import { updateUserRoles } from '@/api/users';
 import { Roles } from '@/types/usersTypes';
-import styles from './RoleManagement.module.css';
 
 interface RoleManagementProps {
     userId: number;
@@ -24,8 +23,8 @@ const RoleManagement = ({ userId, currentRoles, onSuccess }: RoleManagementProps
         setSelectedRole(null);
     };
 
-    const handleRoleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedRole(event.target.value as Roles);
+    const handleRoleChange = (value: Roles) => {
+        setSelectedRole(value);
     };
 
     const handleRemoveRole = async (roleToRemove: Roles) => {
@@ -82,69 +81,62 @@ const RoleManagement = ({ userId, currentRoles, onSuccess }: RoleManagementProps
     };
 
     return (
-        <div className={styles.roleManagement}>
-            <button className={styles.roleButton} onClick={openModal}>
+        <div>
+            <Button size="small" type="primary" onClick={openModal}>
                 Роли
-            </button>
+            </Button>
 
-            {isModalOpen && (
-                <div className={styles.modalOverlay}>
-                    <div className={styles.modalContent}>
-                        <div className={styles.modalHeader}>
-                            <h2>Управление ролями</h2>
-                            <button className={styles.closeButton} onClick={closeModal}>
-                                ×
-                            </button>
-                        </div>
-
-                        <div className={styles.modalBody}>
-                            <div className={styles.currentRoles}>
-                                <h3>Текущие роли:</h3>
-                                <div className={styles.rolesList}>
-                                    {currentRoles.map(role => (
-                                        <div key={role} className={styles.roleItem}>
-                                            {role}
-                                            <button
-                                                className={styles.removeRoleButton}
-                                                onClick={() => handleRemoveRole(role)}
-                                                disabled={loading}
-                                            >
-                                                ×
-                                            </button>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div className={styles.addRole}>
-                                <h3>Добавить роль:</h3>
-                                <select
-                                    value={selectedRole || ''}
-                                    onChange={handleRoleChange}
-                                    className={styles.roleSelect}
-                                    disabled={loading}
+            <Modal
+                title="Управление ролями"
+                open={isModalOpen}
+                onCancel={closeModal}
+                footer={null}
+                width={500}
+            >
+                <Space direction="vertical" style={{ width: '100%' }} size="large">
+                    <div>
+                        <h3>Текущие роли:</h3>
+                        <Space wrap>
+                            {currentRoles.map(role => (
+                                <Tag
+                                    key={role}
+                                    closable
+                                    onClose={() => handleRemoveRole(role)}
+                                    style={{ fontSize: '14px', padding: '4px 8px' }}
                                 >
-                                    <option value="">Выберите роль</option>
-                                    {Object.values(Roles).map(role => (
-                                        !currentRoles.includes(role) && (
-                                            <option key={role} value={role}>
-                                                {role}
-                                            </option>
-                                        )
-                                    ))}
-                                </select>
-                                <button
-                                    className={styles.addRoleButton}
-                                    onClick={handleAddRole}
-                                    disabled={!selectedRole || loading}
-                                >
-                                    Добавить
-                                </button>
-                            </div>
-                        </div>
+                                    {role}
+                                </Tag>
+                            ))}
+                        </Space>
                     </div>
-                </div>
-            )}
+
+                    <div>
+                        <h3>Добавить роль:</h3>
+                        <Space>
+                            <Select
+                                style={{ width: 200 }}
+                                placeholder="Выберите роль"
+                                value={selectedRole}
+                                onChange={handleRoleChange}
+                                disabled={loading}
+                                options={Object.values(Roles)
+                                    .filter(role => !currentRoles.includes(role))
+                                    .map(role => ({
+                                        value: role,
+                                        label: role
+                                    }))}
+                            />
+                            <Button
+                                type="primary"
+                                onClick={handleAddRole}
+                                disabled={!selectedRole || loading}
+                            >
+                                Добавить
+                            </Button>
+                        </Space>
+                    </div>
+                </Space>
+            </Modal>
         </div>
     );
 };
